@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pikkdama</string>
+    <string name="buttonConnect">Connect</string>
+    <string name="editName">Name</string>
+    <string name="waiting_for_server">Waiting for server</string>
+    <string name="must_enter_name">You have to enter a name</string>
+</resources>
