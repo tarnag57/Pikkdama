@@ -1,5 +1,6 @@
 package com.tarnag.pikkdama;
 
+import android.content.Intent;
 import android.util.Log;
 
 import java.io.DataInputStream;
@@ -22,6 +23,7 @@ public class ClientCom {
 
     //activities
     ConnectActivity connectActivity = null;
+    GameActivity gameActivity=null;
 
     //PORT USED BY THE APP
     public final int clientReceivingPort = 2016;
@@ -34,11 +36,24 @@ public class ClientCom {
     ClientCom (ConnectActivity connectActivity) {
         this.connectActivity=connectActivity;
 
+        Log.d("ClientCom", "CLIENTCOM CREATED from gameActivity");
+
         //creates listening thread and starts it
         SocketListeningThread socketListeningThread = new SocketListeningThread();
         socketListeningThread.start();
 
 
+    }
+
+    //CONSTRUCTOR FOR GAME ACTIVITY
+    ClientCom(GameActivity gameActivity){
+        this.gameActivity=gameActivity;
+
+        Log.d("ClientCom", "CLIENTCOM CREATED from gameActivity");
+
+        //creates listening thread and starts it
+        SocketListeningThread socketListeningThread = new SocketListeningThread();
+        socketListeningThread.start();
     }
 
     //MESSAGE SENDING FUNCTION
@@ -106,7 +121,7 @@ public class ClientCom {
 
 
     //THREADS THAT LISTENS TO OTHER'S CONNECTION
-    private class SocketListeningThread extends Thread {  //BACZA FÜREDI
+    private class SocketListeningThread extends Thread {  //BACZA FÜREDI KIRÁLY
         ServerSocket serverSocket;
         Socket socket;
         DataInputStream dataInputStream;
@@ -159,6 +174,7 @@ public class ClientCom {
                     if (serverSocket!=null && !running){
                         try{
                             serverSocket.close();
+                            Log.d("serverSocket","closed in finally");
                         } catch (IOException e){
                             //e.printStackTrace
                         }
@@ -186,14 +202,37 @@ public class ClientCom {
     //PARESES THE RECEIVE MESSAGES AND TAKES ACTION
     private void parseReceivedMessage (String gotMsg, String clientIP) {
 
-        if (gotMsg.equals("OK")) {
+        if (gotMsg.equals("OK") && connectActivity!=null){
             connectActivity.isConnected=true;
             connectActivity.serverIP=clientIP;
             writeOnUI(connectActivity.getResources().getString(R.string.waiting_for_server)+"\n");}
 
-        if (gotMsg.equals("START")){
+        if (gotMsg.equals("START")&& connectActivity!=null){
             running=false;
-            //TODO new activty for the game
+            sendMessage(connectActivity.serverIP,clientSendingPort,"duvgfvefhbj");
+           // try {wait(500);} catch (InterruptedException e) {
+                // e.printStackTrace();}
+            //TODO new activity for the game
+            Intent intent=new Intent(connectActivity,GameActivity.class);
+            intent.putExtra("ServerIp",connectActivity.serverIP);
+            intent.putExtra("SendingPort",clientSendingPort);
+            intent.putExtra("ReceivingPort",clientReceivingPort);
+            intent.putExtra("OwnName",connectActivity.ownName);
+            connectActivity.startActivity(intent);
+            connectActivity.finish();
+        }
+
+        if (gameActivity==null) return;
+
+        if (gotMsg.substring(0,5).equals("DEAL.")){
+            Card card=new Card(gotMsg.substring(5));
+            gameActivity.ownCards.add(card);
+
+            //if 13 cards have been received
+            if (gameActivity.ownCards.size() == 13) {
+                Log.d("parseReceivedMessage", "GOT 13 CARDS");
+                gameActivity.createListView();
+            }
         }
 
 

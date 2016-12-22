@@ -4,4 +4,8 @@
     <string name="editName">Name</string>
     <string name="waiting_for_server">Waiting for server</string>
     <string name="must_enter_name">You have to enter a name</string>
+    <string name="hearts">Hearts</string>
+    <string name="clubs">Clubs</string>
+    <string name="spades">Spades</string>
+    <string name="diamonds">Diamonds</string>
 </resources>
