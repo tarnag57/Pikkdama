@@ -222,10 +222,11 @@ public class ClientCom {
             connectActivity.finish();
         }
 
-        if (gameActivity==null) return;
+        if (gameActivity == null) return;
 
+        //THESE ARE RUNNING ONLY IF STARTED FROM GAME ACTIVITY
         if (gotMsg.substring(0,5).equals("DEAL.")){
-            Card card=new Card(gotMsg.substring(5));
+            Card card = new Card(gotMsg.substring(5));
             gameActivity.ownCards.add(card);
 
             //if 13 cards have been received
@@ -233,6 +234,22 @@ public class ClientCom {
                 Log.d("parseReceivedMessage", "GOT 13 CARDS");
                 gameActivity.createListView();
             }
+        }
+
+        //giving 3 cards
+        if (gotMsg.substring(0,7).equals("GIVING.")) {
+            Card card = new Card(gotMsg.substring(5));
+            gameActivity.ownCards.add(card);
+            if (gameActivity.ownCards.size() == 13) {
+                gameActivity.createListView();
+                gameActivity.startGame();
+            }
+
+        }
+
+        //number of player
+        if (gotMsg.substring(0,7).equals("NUMBER.")) {
+            gameActivity.roundNumber = Integer.parseInt(gotMsg.substring(7));
         }
 
 
