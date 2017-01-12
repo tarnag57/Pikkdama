@@ -32,7 +32,7 @@ public class CardAdapter extends ArrayAdapter<Card> {
         View customView = layoutInflater.inflate(R.layout.card_list, parent, false);
 
         Card singleCard = getItem(position);
-        String cardType = singleCard.type;
+        String cardType = singleCard.name;
 
         TextView textView = (TextView) customView.findViewById(R.id.textView);
         textView.setText(cardType);

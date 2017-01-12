@@ -90,15 +90,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     protected void giving(){
-        if (gameNumber%4!=0){
-            serverCom.receivedGivingCard=0;
-            isgiving=true;
+        if (gameNumber % 4 != 0){
+            serverCom.receivedGivingCard = 0;
+            isgiving = true;
         }
 
     }
 
     protected void game(){
-        isplaying=true;
+        isplaying = true;
 
     }
 }

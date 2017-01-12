@@ -19,7 +19,6 @@ public class GameActivity extends AppCompatActivity {
     public int clientSendingPort;
     private ListView listView;
     CardAdapter cardAdapter;
-    int gameNumber=0;
 
     public int roundNumber = 0;
     private boolean isInGame = false;
@@ -52,12 +51,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void createListView() {
-
-        //copying card types into array
-        String[] cardNames = new String[13];
-        for (int i = 0; i < 13; i++) {
-            cardNames[i] = ownCards.get(i).type;
-        }
 
         if (roundNumber % 4 == 0) {
             startGame();

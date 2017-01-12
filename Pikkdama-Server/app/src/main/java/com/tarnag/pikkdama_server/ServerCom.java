@@ -214,14 +214,14 @@ public class ServerCom {
                 if (msg.substring(0,7).equals("GIVING.")){
                     receivedGivingCard++;
 
-                    int sender=-1;
-                    for (int i=0;i<4;i++){
-                        if (gameActivity.players[i].ip==ip) sender=i;
+                    int sender = -1;
+                    for (int i = 0; i < 4; i++){
+                        if (gameActivity.players[i].ip.equals(ip)) sender = i;
                     }
 
-                    if (sender!=-1) sendMessage(gameActivity.players[(sender+1)%4].ip,serverSendingPort,msg);
-                    if (receivedGivingCard==12){
-                        gameActivity.isgiving=false;
+                    if (sender != -1) sendMessage(gameActivity.players[(sender+1) % 4].ip,serverSendingPort,msg);
+                    if (receivedGivingCard == 12){
+                        gameActivity.isgiving = false;
                         gameActivity.game();
                     }
 
