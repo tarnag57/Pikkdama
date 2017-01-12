@@ -16,7 +16,7 @@ public class GameActivity extends AppCompatActivity {
     public int clientReceivingPort;
     public int clientSendingPort;
     private ListView listView;
-    ArrayAdapter adapter;
+    CardAdapter cardAdapter;
 
     List<Card> ownCards=new ArrayList<>();
 
@@ -53,13 +53,16 @@ public class GameActivity extends AppCompatActivity {
             cardNames[i] = ownCards.get(i).type;
         }
 
+        Card[] ownCardsArray = new Card[ownCards.size()];
+        ownCards.toArray(ownCardsArray);
+
         //creating adapter
         Log.d("createListView", "Creating listView");
-        adapter = new ArrayAdapter<String>(this, R.layout.card_list, cardNames);
+        cardAdapter = new CardAdapter(this, ownCardsArray);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                listView.setAdapter(adapter);
+                listView.setAdapter(cardAdapter);
             }
         });
 
