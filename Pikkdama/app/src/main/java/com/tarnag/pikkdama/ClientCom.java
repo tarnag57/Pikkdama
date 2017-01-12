@@ -212,7 +212,7 @@ public class ClientCom {
             sendMessage(connectActivity.serverIP,clientSendingPort,"duvgfvefhbj");
            // try {wait(500);} catch (InterruptedException e) {
                 // e.printStackTrace();}
-            //TODO new activity for the game
+            //new activity for the game
             Intent intent=new Intent(connectActivity,GameActivity.class);
             intent.putExtra("ServerIp",connectActivity.serverIP);
             intent.putExtra("SendingPort",clientSendingPort);

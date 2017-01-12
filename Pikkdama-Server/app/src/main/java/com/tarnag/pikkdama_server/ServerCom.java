@@ -27,6 +27,8 @@ public class ServerCom {
 
     boolean running = true;
 
+    int receivedGivingCard=0;
+
     //PORT USED BY THE APP
     public final int serverReceivingPort = 2015;
     public final int serverSendingPort = 2016;
@@ -202,12 +204,29 @@ public class ServerCom {
 
                 }
             }
-
+            return;
         }
 
         //if used from gameActivity
         if (gameActivity != null) {
             //TODO GameActivity message handling
+            if (gameActivity.isgiving){
+                if (msg.substring(0,7).equals("GIVING.")){
+                    receivedGivingCard++;
+
+                    int sender=-1;
+                    for (int i=0;i<4;i++){
+                        if (gameActivity.players[i].ip==ip) sender=i;
+                    }
+
+                    if (sender!=-1) sendMessage(gameActivity.players[(sender+1)%4].ip,serverSendingPort,msg);
+                    if (receivedGivingCard==12){
+                        gameActivity.isgiving=false;
+                        gameActivity.game();
+                    }
+
+                }
+            }
         }
     }
 

@@ -34,6 +34,8 @@ public class ConnectionActivity extends AppCompatActivity {
     String message = "";
     TextView textView;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

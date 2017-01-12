@@ -17,6 +17,7 @@ public class GameActivity extends AppCompatActivity {
     public int clientSendingPort;
     private ListView listView;
     CardAdapter cardAdapter;
+    int gameNumber=0;
 
     List<Card> ownCards=new ArrayList<>();
 

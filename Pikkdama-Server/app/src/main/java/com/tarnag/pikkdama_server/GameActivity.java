@@ -16,6 +16,9 @@ public class GameActivity extends AppCompatActivity {
     Player[] players = new Player[4];
     ServerCom serverCom;
     Card[] deck = new Card[52];
+    int gameNumber=0;
+    boolean isgiving=false;
+    boolean isplaying=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,15 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
-        serverCom = new ServerCom(this);
+        if (gameNumber==0)serverCom = new ServerCom(this);
+        gameNumber++;
+
+        for (int i = 0; i < 4; i++) {
+            Player currPlayer = players[i];
+            serverCom.sendMessage(currPlayer.ip, serverCom.serverSendingPort, "NUMBER." + Integer.toString(gameNumber));
+        }
+
+        //TODO állás kiiratása és változtatása
 
         int index = 0;
 
@@ -74,7 +85,20 @@ public class GameActivity extends AppCompatActivity {
                 index++;
             }
         }
+
+        giving();
     }
 
+    protected void giving(){
+        if (gameNumber%4!=0){
+            serverCom.receivedGivingCard=0;
+            isgiving=true;
+        }
 
+    }
+
+    protected void game(){
+        isplaying=true;
+
+    }
 }

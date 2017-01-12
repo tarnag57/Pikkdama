@@ -11,6 +11,7 @@ public class Card {
     int colour;
     int value;
     float random;
+    String name;
 
     Card (String s){  //s=X_YY
         type=s;
@@ -34,5 +35,9 @@ public class Card {
         type+=Integer.toString(Value);
         Random rand = new Random();
         random = rand.nextFloat();
+    }
+
+    void addname(){
+
     }
 }
