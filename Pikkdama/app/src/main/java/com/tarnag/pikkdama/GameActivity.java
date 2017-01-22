@@ -10,6 +10,9 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
@@ -50,26 +53,41 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    public void createListView() {
-
+    public void startRound() {
+        isInGame = false;
         if (roundNumber % 4 == 0) {
             startGame();
         } else {
-            //giving
-            Card[] ownCardsArray = new Card[ownCards.size()];
-            ownCards.toArray(ownCardsArray);
-
-            //creating adapter
-            Log.d("createListView", "Creating listView");
-            cardAdapter = new CardAdapter(this, ownCardsArray);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    listView.setAdapter(cardAdapter);
-                }
-            });
-
+            createListView();
         }
+    }
+
+    public void createListView() {
+
+        //sorting cards
+        Collections.sort(ownCards, new Comparator<Card>() {
+            @Override
+            public int compare(Card card, Card t1) {
+                if (card.colour > t1.colour) return 1;
+                if (card.colour < t1.colour) return -1;
+                if (card.value > t1.value) return 1;
+                if (card.value < t1.value) return -1;
+                return 0;
+            }
+        });
+        Card[] ownCardsArray = new Card[ownCards.size()];
+        ownCards.toArray(ownCardsArray);
+
+
+        //creating adapter
+        Log.d("createListView", "Creating listView");
+        cardAdapter = new CardAdapter(this, ownCardsArray);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                listView.setAdapter(cardAdapter);
+            }
+        });
 
     }
 

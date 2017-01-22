@@ -232,7 +232,7 @@ public class ClientCom {
             //if 13 cards have been received
             if (gameActivity.ownCards.size() == 13) {
                 Log.d("parseReceivedMessage", "GOT 13 CARDS");
-                gameActivity.createListView();
+                gameActivity.startRound();
             }
         }
 
