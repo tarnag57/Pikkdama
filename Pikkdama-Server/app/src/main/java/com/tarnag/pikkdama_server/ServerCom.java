@@ -14,6 +14,8 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.HashMap;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Created by viktor on 2016. 12. 15..
  */
@@ -29,6 +31,11 @@ public class ServerCom {
 
     int receivedGivingCard=0;
 
+    String[][] givingCards=new String[4][3];
+    int[] receivedGivingCards=new int[4];
+
+    int roundNumber=1;
+
     //PORT USED BY THE APP
     public final int serverReceivingPort = 2015;
     public final int serverSendingPort = 2016;
@@ -39,6 +46,10 @@ public class ServerCom {
         //creates listening thread and starts it
         SocketListeningThread socketListeningThread = new SocketListeningThread();
         socketListeningThread.start();
+
+        for (int i=0;i<4;i++){
+            receivedGivingCards[i]=0;
+        }
     }
 
     ServerCom (GameActivity activity) {
@@ -214,14 +225,24 @@ public class ServerCom {
                 if (msg.substring(0,7).equals("GIVING.")){
                     receivedGivingCard++;
 
+
                     int sender = -1;
                     for (int i = 0; i < 4; i++){
                         if (gameActivity.players[i].ip.equals(ip)) sender = i;
                     }
 
-                    if (sender != -1) sendMessage(gameActivity.players[(sender+1) % 4].ip,serverSendingPort,msg);
+                    givingCards[sender][receivedGivingCards[sender]]=msg;
+                    receivedGivingCards[sender]++;
+
+
                     if (receivedGivingCard == 12){
+                        receivedGivingCard=0;
+                        for (int i=0;i<4;i++){
+                            receivedGivingCards[i]=0;
+                        }
+
                         gameActivity.isgiving = false;
+                        sendGivingCards();
                         gameActivity.game();
                     }
 
@@ -230,6 +251,27 @@ public class ServerCom {
         }
     }
 
+
+    public void sendGivingCards(){
+        int givingwhere=0;
+        switch (roundNumber%4){
+            case 1:  {givingwhere=1;break;}
+            case 2: {givingwhere=3;break;}
+            case 3: {givingwhere=2;break;}
+        }
+
+        for (int i=0;i<4;i++){
+            int receiver=(i+givingwhere)%4;
+            for (int j=0;j<3;j++){
+                sendMessage(gameActivity.players[receiver].ip,serverSendingPort,givingCards[i][j]);
+            }
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {
+               // e.printStackTrace();
+            }
+        }
+    }
 
     //sends message (msg) to dstIP:socketClientPort
     public void sendMessage (String destIP, int socketClientPort, String msg) {
