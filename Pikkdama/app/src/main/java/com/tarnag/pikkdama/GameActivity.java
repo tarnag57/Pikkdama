@@ -23,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
     private ListView listView;
     CardAdapter cardAdapter;
 
-    public int roundNumber = 0;
+    public int roundNumber = 1;
     private boolean isInGame = false;
     private boolean isInGiving = true;
 
