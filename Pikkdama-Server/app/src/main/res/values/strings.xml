@@ -11,12 +11,10 @@
         <item>Player 4</item>
     </string-array>
 
-    <string-array name="CardColour">
-        <item>Spades</item>
-        <item>Hearts</item>
-        <item>Diamonds</item>
-        <item>Clubs</item>
-    </string-array>
+    <string name="spades">Spades</string>
+    <string name="hearts">Hearts</string>
+    <string name="diamonds">Diamonds</string>
+    <string name="clubs">Clubs</string>
 
     <string name="jack">jack</string>
     <string name="queen">queen</string>
