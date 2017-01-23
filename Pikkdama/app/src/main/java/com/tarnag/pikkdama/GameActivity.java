@@ -139,7 +139,7 @@ public class GameActivity extends AppCompatActivity {
 
         //if during game
         if (isInGame) {
-            
+
         }
 
     }

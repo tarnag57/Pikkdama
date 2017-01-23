@@ -238,8 +238,8 @@ public class ClientCom {
 
         //giving 3 cards
         if (gotMsg.substring(0,7).equals("GIVING.")) {
-            Log.d("parse_GIVING", gotMsg.substring(5));
-            Card card = new Card(gotMsg.substring(5));
+            Log.d("parse_GIVING", gotMsg.substring(7));
+            Card card = new Card(gotMsg.substring(7));
             Log.d("parse_GIVING", "added card");
             gameActivity.ownCards.add(card);
             if (gameActivity.ownCards.size() == 13) {
