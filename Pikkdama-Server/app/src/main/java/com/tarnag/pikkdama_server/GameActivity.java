@@ -53,6 +53,11 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < 4; i++) {
             Player currPlayer = players[i];
             serverCom.sendMessage(currPlayer.ip, serverCom.serverSendingPort, "NUMBER." + Integer.toString(gameNumber));
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         //TODO állás kiiratása és változtatása
