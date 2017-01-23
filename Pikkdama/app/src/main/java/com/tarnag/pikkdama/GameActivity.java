@@ -25,6 +25,7 @@ public class GameActivity extends AppCompatActivity {
 
     public int roundNumber = 0;
     private boolean isInGame = false;
+    private boolean isInGiving = true;
 
     List<Card> ownCards = new ArrayList<>();
 
@@ -58,12 +59,14 @@ public class GameActivity extends AppCompatActivity {
         if (roundNumber % 4 == 0) {
             startGame();
         } else {
+            isInGiving = true;
             createListView();
         }
     }
 
     public void createListView() {
 
+        Log.d("createListView", "sorting cards");
         //sorting cards
         Collections.sort(ownCards, new Comparator<Card>() {
             @Override
@@ -95,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
 
         Log.d("onOkButtonClick", "Clicked and isInGame: " + isInGame);
         //if during giving
-        if (!isInGame) {
+        if (isInGiving) {
 
             //get checked cards
             List<String> giving = new ArrayList<>();
@@ -129,13 +132,14 @@ public class GameActivity extends AppCompatActivity {
                     String msg = "GIVING." + givenCard;
                     clientCom.sendMessage(serverIp, clientCom.clientSendingPort, msg);
                 }
+                isInGiving = false;
             }
 
         }
 
         //if during game
-        else {
-
+        if (isInGame) {
+            
         }
 
     }
