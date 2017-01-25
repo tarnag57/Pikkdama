@@ -32,6 +32,7 @@ public class Card {
         addName();
     }
 
+    //Adds name string to display for user
     private void addName(){
 
         String suit = "";

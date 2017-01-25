@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by viktor on 2016. 12. 14..
+ * Describes communication functions for
  */
 
 public class ClientCom {
@@ -202,16 +203,18 @@ public class ClientCom {
     //PARESES THE RECEIVE MESSAGES AND TAKES ACTION
     private void parseReceivedMessage (String gotMsg, String clientIP) {
 
+        //response from server confirming name
         if (gotMsg.equals("OK") && connectActivity!=null){
             connectActivity.isConnected=true;
             connectActivity.serverIP=clientIP;
             writeOnUI(connectActivity.getResources().getString(R.string.waiting_for_server)+"\n");}
 
+        //starts the game
         if (gotMsg.equals("START")&& connectActivity!=null){
             running=false;
+            //helps the server to break out from infinite loop
             sendMessage(connectActivity.serverIP,clientSendingPort,"duvgfvefhbj");
-           // try {wait(500);} catch (InterruptedException e) {
-                // e.printStackTrace();}
+
             //new activity for the game
             Intent intent=new Intent(connectActivity,GameActivity.class);
             intent.putExtra("ServerIp",connectActivity.serverIP);
@@ -225,6 +228,7 @@ public class ClientCom {
         if (gameActivity == null) return;
 
         //THESE ARE RUNNING ONLY IF STARTED FROM GAME ACTIVITY
+        //receiving cards during dealing
         if (gotMsg.substring(0,5).equals("DEAL.")){
             Card card = new Card(gotMsg.substring(5));
             gameActivity.ownCards.add(card);
@@ -266,6 +270,7 @@ public class ClientCom {
         }
     }
 
+    //get own ip address
     public String getIpAddress() {
         String ip = "";
         try {

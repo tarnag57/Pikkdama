@@ -25,7 +25,7 @@ public class GameActivity extends AppCompatActivity {
     private ListView listView;
     CardAdapter cardAdapter;
 
-    public int roundNumber = 1;
+    public int roundNumber = 0;
     private boolean isInGame = false;
     private boolean isInGiving = true;
 
@@ -41,11 +41,13 @@ public class GameActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listView);
 
+        //gets info out of intent
         Intent intent=getIntent();
         serverIp=intent.getStringExtra("ServerIp");
         clientReceivingPort=intent.getIntExtra("ReceivingPort",2016);
         clientSendingPort=intent.getIntExtra("SendingPort",2015);
 
+        //waits until previous ClientCom destroys
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
@@ -56,7 +58,9 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //starts the next round
     public void startRound() {
+        roundNumber++;
         isInGame = false;
         if (roundNumber % 4 == 0) {
             startGame();
@@ -96,6 +100,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //ALL USER INTERACTION
     public void onOkButtonClick(View view) {
 
         Log.d("onOkButtonClick", "Clicked and isInGame: " + isInGame);
@@ -153,6 +158,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //starts the actual game
     public void startGame() {
         isInGame = true;
     }

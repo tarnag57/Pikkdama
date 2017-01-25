@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by Marci on 2016. 12. 21..
+ * Adapter for displaying cards in list
  */
 
 public class CardAdapter extends ArrayAdapter<Card> {
