@@ -28,6 +28,11 @@ public class GameActivity extends AppCompatActivity {
     public int roundNumber = 0;
     private boolean isInGame = false;
     private boolean isInGiving = true;
+    private boolean canPlayCard = false;
+    private boolean hasBeenHearts = false;
+    private boolean clubs2 = false;
+    private boolean youCall = false;
+    private int colourOfCall = 0;
 
     List<Card> ownCards = new ArrayList<>();
 
@@ -154,13 +159,111 @@ public class GameActivity extends AppCompatActivity {
         //if during game
         if (isInGame) {
 
+            //if you can play a card
+            if (canPlayCard) {
+
+                //gets selected card
+                List<Card> selected = new ArrayList<>();
+                int size = cardAdapter.checkBoxes.size();
+                int selectedCard = 0;
+
+                for (int i = 0; i < size; i++) {
+                    if (cardAdapter.checkBoxes.get(i).isChecked()) {
+                        selected.add(ownCards.get(i));
+                    }
+                }
+
+                //checks if it is one card
+                if (selected.size() == 1) {
+                    //checks if you can play it
+                    if (canPlayThisCard(selected.get(0))) {
+                        ownCards.remove(selectedCard);
+                        playCard(selected.get(0));
+                    }
+
+                } else {
+                    //TODO notifies player that he selected to many cards
+                }
+            }
         }
 
     }
 
+    private boolean canPlayThisCard(Card card) {
+
+        //if you call
+        if (youCall) {
+            if (clubs2) {
+                return card.type.equals("4_02");
+            }
+            if (!hasBeenHearts) {
+                if (card.colour != 1) return true;
+
+                //checks if you have only hearts
+                boolean hasNonHearts = false;
+                int size = ownCards.size();
+                for (int i = 0; i < size; i++) {
+                    if (ownCards.get(i).colour != 1) hasNonHearts = true;
+                }
+                return !hasNonHearts;
+            }
+            return true;
+        }
+        //middle of a turn
+        else {
+            if (card.colour == colourOfCall) return true;
+
+            //checks if you have no colour of call
+            boolean hasColourOfCall = false;
+            int size = ownCards.size();
+            for (int i = 0; i < size; i++) {
+                if (ownCards.get(i).colour != colourOfCall) hasColourOfCall = true;
+            }
+            return !hasColourOfCall;
+        }
+    }
+
+    private void playCard(Card card) {
+        canPlayCard = false;
+        youCall = false;
+        String msg = "PLAY." + card.type;
+        clientCom.sendMessage(serverIp, clientSendingPort, msg);
+        createListView();
+    }
+
     //starts the actual game
     public void startGame() {
+
+        //sets inGame mode
         isInGame = true;
+
+        //checks for clubs 2
+        boolean clubs2 = false;
+        for (int i = 0; i < 13; i++) {
+            if (ownCards.get(i).type.equals("4_02")) {
+                clubs2 = true;
+            }
+        }
+        if (clubs2) {
+            clientCom.sendMessage(serverIp, clientSendingPort, "CLUBS2");
+        }
+
+    }
+
+    //your call, notifies the system that you can play a card
+    public void yourCall(boolean clubs2, boolean hasBeenHearts) {
+        this.youCall = true;
+        this.clubs2 = clubs2;
+        this.hasBeenHearts = hasBeenHearts;
+        canPlayCard = true;
+        //TODO notifies player to play a card
+    }
+
+    //your turn to play a card
+    public void yourPlay(int colourOfCall) {
+        this.colourOfCall = colourOfCall;
+        canPlayCard = true;
+        //TODO notifies player to play a card
     }
 
 }

@@ -220,8 +220,11 @@ public class ServerCom {
 
         //if used from gameActivity
         if (gameActivity != null) {
-            //TODO GameActivity message handling
+
+            //used in giving mode
             if (gameActivity.isgiving){
+
+                //giving
                 if (msg.substring(0,7).equals("GIVING.")){
                     receivedGivingCard++;
 
@@ -243,9 +246,25 @@ public class ServerCom {
 
                         gameActivity.isgiving = false;
                         sendGivingCards();
-                        gameActivity.game();
                     }
 
+                }
+            }
+            //if not giving (e.g. actual game)
+            else {
+
+                //checking for clubs2
+                if (msg.equals("CLUBS2")) {
+                    gameActivity.startingPlayer = playerFromIp(ip);
+                    gameActivity.game();
+                }
+
+                //if card was played
+                if (msg.length() > 4) {
+                    if (msg.substring(0,5).equals("PLAY.")) {
+                        Card playedCard = new Card(msg.substring(5));
+                        gameActivity.playedACard(playedCard);
+                    }
                 }
             }
         }
@@ -253,6 +272,8 @@ public class ServerCom {
 
 
     public void sendGivingCards(){
+
+        //determining receiver mod 4
         int givingwhere=0;
         switch (roundNumber%4){
             case 1:  {givingwhere=1;break;}
@@ -260,6 +281,7 @@ public class ServerCom {
             case 3: {givingwhere=2;break;}
         }
 
+        //sending cards to receivers
         for (int i=0;i<4;i++){
             int receiver=(i+givingwhere)%4;
             for (int j=0;j<3;j++){
@@ -271,6 +293,16 @@ public class ServerCom {
                // e.printStackTrace();
             }
         }
+    }
+
+    protected int playerFromIp(String ip) {
+        int player = 0;
+        for (int i = 0; i < 4; i++) {
+            if (gameActivity.players[i].ip.equals(ip)) {
+                player = i;
+            }
+        }
+        return player;
     }
 
     //sends message (msg) to dstIP:socketClientPort

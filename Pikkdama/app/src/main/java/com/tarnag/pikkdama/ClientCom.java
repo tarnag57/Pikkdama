@@ -59,6 +59,7 @@ public class ClientCom {
 
     //MESSAGE SENDING FUNCTION
     public void sendMessage(String ip,int port, String message){
+        Log.d("sendMessage", "Sending message to " + ip + ":" + port + " says: " + message);
         SocketSendingThread socketSendingThread=new SocketSendingThread(ip,port,message);
         socketSendingThread.start();
     }
@@ -240,22 +241,44 @@ public class ClientCom {
             }
         }
 
-        //giving 3 cards
-        if (gotMsg.substring(0,7).equals("GIVING.")) {
-            Log.d("parse_GIVING", gotMsg.substring(7));
-            Card card = new Card(gotMsg.substring(7));
-            Log.d("parse_GIVING", "added card");
-            gameActivity.ownCards.add(card);
-            if (gameActivity.ownCards.size() == 13) {
-                gameActivity.createListView();
-                gameActivity.startGame();
+        if (gotMsg.length() > 6) {
+            //giving 3 cards
+            if (gotMsg.substring(0, 7).equals("GIVING.")) {
+                Log.d("parse_GIVING", gotMsg.substring(7));
+                Card card = new Card(gotMsg.substring(7));
+                Log.d("parse_GIVING", "added card");
+                gameActivity.ownCards.add(card);
+                if (gameActivity.ownCards.size() == 13) {
+                    gameActivity.createListView();
+                    gameActivity.startGame();
+                }
+
             }
 
+            //number of player
+            if (gotMsg.substring(0, 7).equals("NUMBER.")) {
+                gameActivity.roundNumber = Integer.parseInt(gotMsg.substring(7));
+            }
         }
 
-        //number of player
-        if (gotMsg.substring(0,7).equals("NUMBER.")) {
-            gameActivity.roundNumber = Integer.parseInt(gotMsg.substring(7));
+        //your call
+        if (gotMsg.substring(0,5).equals("CALL.")) {
+            boolean clubs2 = false;
+            boolean hasBeenHearts = false;
+
+            //gets modifiers
+            if (gotMsg.length() > 5) {
+                if (gotMsg.substring(5).equals("CLUBS2")) clubs2 = true;
+                if (gotMsg.substring(5).equals("HEARTS")) hasBeenHearts = true;
+            }
+
+            gameActivity.yourCall(clubs2, hasBeenHearts);
+        }
+
+        //your turn to play a card
+        if (gotMsg.substring(0,5).equals("PLAY.")) {
+            int colourOfCall = Integer.parseInt(gotMsg.substring(5));
+            gameActivity.yourPlay(colourOfCall);
         }
 
 
