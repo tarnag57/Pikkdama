@@ -93,12 +93,8 @@ public class ServerCom {
                 Log.d("SocketServerThread.run", msg +" sent to: "+destIP+"\n");
 
                 //tons of exception handling
-            } catch (UnknownHostException e) {
+            } catch (Exception e) {
                 //e.printStackTrace();
-            } catch (IOException e) {
-                //e.printStackTrace();
-
-                //closes socket
             } finally {
                 if (socket != null) {
                     try {
@@ -234,14 +230,14 @@ public class ServerCom {
                         if (gameActivity.players[i].ip.equals(ip)) sender = i;
                     }
 
-                    givingCards[sender][receivedGivingCards[sender]]=msg;
+                    givingCards[sender][receivedGivingCards[sender]] = msg;
                     receivedGivingCards[sender]++;
 
-
+                    //if all the cards were received resets everything and sends them back to players
                     if (receivedGivingCard == 12){
-                        receivedGivingCard=0;
-                        for (int i=0;i<4;i++){
-                            receivedGivingCards[i]=0;
+                        receivedGivingCard = 0;
+                        for (int i = 0; i < 4; i++){
+                            receivedGivingCards[i] = 0;
                         }
 
                         gameActivity.isgiving = false;
@@ -274,18 +270,18 @@ public class ServerCom {
     public void sendGivingCards(){
 
         //determining receiver mod 4
-        int givingwhere=0;
+        int givingWhere = 0;
         switch (roundNumber%4){
-            case 1:  {givingwhere=1;break;}
-            case 2: {givingwhere=3;break;}
-            case 3: {givingwhere=2;break;}
+            case 1:  {givingWhere = 1; break;}
+            case 2: {givingWhere = 3; break;}
+            case 3: {givingWhere = 2; break;}
         }
 
         //sending cards to receivers
-        for (int i=0;i<4;i++){
-            int receiver=(i+givingwhere)%4;
-            for (int j=0;j<3;j++){
-                sendMessage(gameActivity.players[receiver].ip,serverSendingPort,givingCards[i][j]);
+        for (int i = 0; i < 4; i++){
+            int receiver = (i + givingWhere) % 4;
+            for (int j = 0; j < 3; j++){
+                sendMessage(gameActivity.players[receiver].ip, serverSendingPort, givingCards[i][j]);
             }
             try {
                 sleep(100);
@@ -295,14 +291,19 @@ public class ServerCom {
         }
     }
 
-    protected int playerFromIp(String ip) {
-        int player = 0;
+    private int playerFromIp(String ip) {
         for (int i = 0; i < 4; i++) {
             if (gameActivity.players[i].ip.equals(ip)) {
-                player = i;
+                return i;
             }
         }
-        return player;
+
+        return -1;
+    }
+
+    public void sendMessageToNthPlayer(int i, String msg) {
+        if (i > 3) return;
+        sendMessage(gameActivity.players[i].ip, serverSendingPort, msg);
     }
 
     //sends message (msg) to dstIP:socketClientPort

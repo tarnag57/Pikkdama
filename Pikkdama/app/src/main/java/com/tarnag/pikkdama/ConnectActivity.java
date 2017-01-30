@@ -46,6 +46,8 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     protected void buttonConnectClicked(View view) {
+
+        //checks if button was already pressed
         if (isConnected) return;
 
         //gets own name
@@ -57,11 +59,17 @@ public class ConnectActivity extends AppCompatActivity {
             return;
         }
 
-        ip=clientCom.getIpAddress();
-        subIp=clientCom.getSubIP(ip);
+        ip = clientCom.getIPAddress();
+        subIp = clientCom.getSubIP(ip);
 
-        for (int i=0;i<256;i++){
-            clientCom.sendMessage(subIp+"."+Integer.toString(i),clientCom.clientSendingPort,"NAME."+ownName);
+        for (int i = 0; i < 256; i++){
+            clientCom.sendMessage(subIp + "." + Integer.toString(i), clientCom.clientSendingPort, "NAME." + ownName);
+            //slows down traffic
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                //e.printStackTrace();
+            }
         }
 
 

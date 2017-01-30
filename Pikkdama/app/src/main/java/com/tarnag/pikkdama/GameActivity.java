@@ -211,6 +211,9 @@ public class GameActivity extends AppCompatActivity {
         }
         //middle of a turn
         else {
+
+            //TODO cannot play valuable card in the first turn
+
             if (card.colour == colourOfCall) return true;
 
             //checks if you have no colour of call
@@ -233,6 +236,9 @@ public class GameActivity extends AppCompatActivity {
 
     //starts the actual game
     public void startGame() {
+
+        //creates UI
+        createListView();
 
         //sets inGame mode
         isInGame = true;

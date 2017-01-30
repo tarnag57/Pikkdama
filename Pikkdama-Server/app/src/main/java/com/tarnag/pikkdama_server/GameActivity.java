@@ -62,16 +62,17 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
-        if (gameNumber==0)serverCom = new ServerCom(this);
+        if (gameNumber == 0)serverCom = new ServerCom(this);
         gameNumber++;
 
+        //sends the number of current game
         for (int i = 0; i < 4; i++) {
             Player currPlayer = players[i];
             serverCom.sendMessage(currPlayer.ip, serverCom.serverSendingPort, "NUMBER." + Integer.toString(gameNumber));
             try {
                 sleep(100);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // e.printStackTrace();
             }
         }
 
@@ -100,6 +101,11 @@ public class GameActivity extends AppCompatActivity {
             for (int j = 0; j < 13; j++) {
                 Player currPlayer = players[i];
                 serverCom.sendMessage(currPlayer.ip, serverCom.serverSendingPort, "DEAL." + deck[index].type);
+                try {
+                    sleep(20);
+                } catch (InterruptedException e) {
+                    // e.printStackTrace();
+                }
                 index++;
             }
         }
@@ -138,7 +144,7 @@ public class GameActivity extends AppCompatActivity {
         if (hasBeenHearts) {
             msg += "HEARTS";
         }
-        serverCom.sendMessage(players[startingPlayer].ip, serverCom.serverSendingPort, msg);
+        serverCom.sendMessageToNthPlayer(startingPlayer, msg);
     }
 
     //alerts the player that it is your turn

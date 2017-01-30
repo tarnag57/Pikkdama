@@ -205,23 +205,23 @@ public class ClientCom {
     private void parseReceivedMessage (String gotMsg, String clientIP) {
 
         //response from server confirming name
-        if (gotMsg.equals("OK") && connectActivity!=null){
-            connectActivity.isConnected=true;
-            connectActivity.serverIP=clientIP;
+        if (gotMsg.equals("OK") && connectActivity != null){
+            connectActivity.isConnected = true;
+            connectActivity.serverIP = clientIP;
             writeOnUI(connectActivity.getResources().getString(R.string.waiting_for_server)+"\n");}
 
         //starts the game
-        if (gotMsg.equals("START")&& connectActivity!=null){
-            running=false;
+        if (gotMsg.equals("START") && connectActivity != null){
+            running = false;
             //helps the server to break out from infinite loop
-            sendMessage(connectActivity.serverIP,clientSendingPort,"duvgfvefhbj");
+            sendMessage(connectActivity.serverIP,clientSendingPort, "duvgfvefhbj");
 
             //new activity for the game
-            Intent intent=new Intent(connectActivity,GameActivity.class);
-            intent.putExtra("ServerIp",connectActivity.serverIP);
-            intent.putExtra("SendingPort",clientSendingPort);
-            intent.putExtra("ReceivingPort",clientReceivingPort);
-            intent.putExtra("OwnName",connectActivity.ownName);
+            Intent intent = new Intent(connectActivity, GameActivity.class);
+            intent.putExtra("ServerIp", connectActivity.serverIP);
+            intent.putExtra("SendingPort", clientSendingPort);
+            intent.putExtra("ReceivingPort", clientReceivingPort);
+            intent.putExtra("OwnName", connectActivity.ownName);
             connectActivity.startActivity(intent);
             connectActivity.finish();
         }
@@ -249,7 +249,6 @@ public class ClientCom {
                 Log.d("parse_GIVING", "added card");
                 gameActivity.ownCards.add(card);
                 if (gameActivity.ownCards.size() == 13) {
-                    gameActivity.createListView();
                     gameActivity.startGame();
                 }
 
@@ -294,7 +293,7 @@ public class ClientCom {
     }
 
     //get own ip address
-    public String getIpAddress() {
+    public String getIPAddress() {
         String ip = "";
         try {
             Enumeration<NetworkInterface> enumerationNetworkInterface =
