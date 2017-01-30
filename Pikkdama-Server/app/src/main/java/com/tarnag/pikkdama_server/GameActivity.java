@@ -37,6 +37,11 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            //e.printStackTrace();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
