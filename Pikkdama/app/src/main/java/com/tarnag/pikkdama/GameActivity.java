@@ -2,13 +2,19 @@ package com.tarnag.pikkdama;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -16,6 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.lang.Object;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -104,6 +111,37 @@ public class GameActivity extends AppCompatActivity {
         });
 
     }
+
+    // Using an AsyncTask to load the slow images in a background thread
+    /*new AsyncTask<ViewHolder, Void, Bitmap>() {
+        private ViewHolder v;
+
+        @Override
+        protected Bitmap doInBackground(ViewHolder... params) {
+            v = params[0];
+            return mFakeImageLoader.getImage();
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+            if (v.position == position) {
+                // If this item hasn't been recycled already, hide the
+                // progress and set and show the image
+                v.progress.setVisibility(View.GONE);
+                v.icon.setVisibility(View.VISIBLE);
+                v.icon.setImageBitmap(result);
+            }
+        }
+    }.execute(holder);
+
+    static class ViewHolder {
+        TextView text;
+        TextView timestamp;
+        ImageView icon;
+        ProgressBar progress;
+        int position;
+    }*/
 
     //ALL USER INTERACTION
     public void onOkButtonClick(View view) {
