@@ -58,7 +58,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/startButton"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:onClick="startGameOnClick" />
 
     <ListView
         android:layout_width="match_parent"
