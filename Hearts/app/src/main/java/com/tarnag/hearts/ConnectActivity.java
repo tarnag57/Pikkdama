@@ -68,11 +68,12 @@ public class ConnectActivity extends AppCompatActivity {
         }
 
         //searching for server
-        SearchingTread searchingTread= new SearchingTread();
-        searchingTread.start();
+
 
         ip = communication.getIPAddress();
         subIp = communication.getSubIP(ip);
+        SearchingTread searchingTread= new SearchingTread();
+        searchingTread.start();
 
 
     }
