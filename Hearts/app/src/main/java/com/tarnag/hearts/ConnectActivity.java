@@ -202,7 +202,9 @@ public class ConnectActivity extends AppCompatActivity {
 
             //puts extras into intent and starts new activity
             Intent intent = new Intent(this, GameActivity.class);
-            intent.putExtra("isServer", isServer);
+            intent.putExtra("ServerIp", serverIP);
+            //intent.putExtra("OwnName", ownName);
+            //intent.putExtra("isServer", isServer);
             intent.putExtra("playerName0", players.get(selectedPlayers[0]).playerName);
             intent.putExtra("playerIp0", players.get(selectedPlayers[0]).ip);
             intent.putExtra("playerName1", players.get(selectedPlayers[1]).playerName);
@@ -236,7 +238,7 @@ public class ConnectActivity extends AppCompatActivity {
         //new activity for the game
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("ServerIp", serverIP);
-        intent.putExtra("OwnName", ownName);
+        //intent.putExtra("OwnName", ownName);
         this.startActivity(intent);
         this.finish();
     }

@@ -29,7 +29,6 @@ public class CommunicationServer {
     //Communication
     Communication communication;
     String ownip;
-
     boolean running = true;
     CommunicationServer (ConnectActivity activity) {
         connectActivity = activity;
@@ -41,7 +40,16 @@ public class CommunicationServer {
 
     }
 
-    private void parseReceivedMessage(String msg, String ip) {
+    CommunicationServer (GameActivity activity) {
+        gameActivity = activity;
+        ownip = getIpAddress();
+
+        //creates listening thread and starts it
+        SocketListeningThread socketListeningThread = new SocketListeningThread();
+        socketListeningThread.start();
+
+    }
+    public void parseReceivedMessage(String msg, String ip) {
         //if used from connectionActivity
         if (connectActivity != null) {
 
@@ -70,14 +78,10 @@ public class CommunicationServer {
         if (ip.equals(ownip)) {
             if (connectActivity != null) {
                 Log.d("sendMessage", "Sending message to myself: " + message);
-                Communication communication = connectActivity.communication;
-                if (communication == null) {
-                    Log.d("sendMessage", "communication was null");
-                }
-                communication.parseReceivedMessage(message, ip);
+                connectActivity.communication.parseReceivedMessage(message, ip);
                 Log.d("sendMessage", "Sent message to myself: " + message);
             } else if(gameActivity != null) {
-                //TODO GAMEACTIVITY
+                gameActivity.communication.parseReceivedMessage(message, ip);
             }
             return;
         }
@@ -85,6 +89,10 @@ public class CommunicationServer {
         Log.d("sendMessage", "Sending message to " + ip + ":" + port + " says: " + message);
         SocketSendingThread socketSendingThread=new SocketSendingThread(ip,port,message);
         socketSendingThread.start();
+    }
+
+    public void sendMessage(int i,String message){
+        sendMessage(gameActivity.serverGameThread.players[i].ip,message);
     }
 
     //CLASS FOR SENDING SOCKETS
