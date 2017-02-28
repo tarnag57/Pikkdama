@@ -90,12 +90,19 @@ public class Communication {
                     return;
                 }
             }
+            if (gotMsg.contains("POSITION.")) {
+                if (gotMsg.substring(0,9).equals("POSITION.")){
+                    gameActivity.gamePanel.ownPosition=gotMsg.charAt(9)-'0';
+                }
+            }
+
             if (gotMsg.contains("ROUNDNUMBER.")){
                 if (gotMsg.substring(0,12).equals("ROUNDNUMBER.")){
                     gameActivity.roundNumber=Integer.parseInt(gotMsg.substring(12));
                     return;
                 }
             }
+
             if (gotMsg.contains("DEAL.")){
                 if (gotMsg.substring(0,5).equals("DEAL.")){
                     gameActivity.gamePanel.cards.add(new Card(gotMsg.substring(5)));
@@ -112,6 +119,7 @@ public class Communication {
                         gameActivity.gamePanel.numOfCards[3]=13;
                         gameActivity.gamePanel.draw();
                     }
+                    return;
                 }
             }
         }

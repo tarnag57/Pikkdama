@@ -22,7 +22,7 @@ public class GamePanel extends SurfaceView implements Runnable{
     ArrayList<Card> cards = new ArrayList<>();
     //players names
     Player[] players = new Player[4];
-    //int ownPosition;
+    int ownPosition;
     //num of cards for each player
     int[] numOfCards = new int[4];
 
