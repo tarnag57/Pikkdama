@@ -6,6 +6,9 @@ import android.view.View;
 
 public class ConnectActivity extends AppCompatActivity {
 
+    Communication communication = null;
+    CommunicationServer communicationServer = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
