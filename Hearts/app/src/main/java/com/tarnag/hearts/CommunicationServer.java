@@ -35,7 +35,6 @@ public class CommunicationServer {
     }
 
     private void parseReceivedMessage(String msg, String ip) {
-
     }
 
     //MESSAGE SENDING FUNCTION

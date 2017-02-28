@@ -50,8 +50,10 @@ public class Communication {
                 connectActivity.writeToUI(connectActivity.getResources().getString(R.string.waiting_for_server)+"\n");
                 return;
             }
-            if (gotMsg.equals("START")){
-                //TODO Start game activity
+            if (gotMsg.contains("START")){
+                if (gotMsg.equals("START")){
+                    //TODO Start game activity
+                }
             }
         }
 
