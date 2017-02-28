@@ -21,7 +21,7 @@ public class GameActivity extends AppCompatActivity {
     GamePanel gamePanel;
 
     //stores players
-    Player[] players = new Player[4];
+    //Player[] players = new Player[4];
 
     String serverIp;
     boolean isServer=false;
@@ -29,6 +29,8 @@ public class GameActivity extends AppCompatActivity {
     Communication communication;
     CommunicationServer communicationServer=null;
     ServerGameThread serverGameThread=null;
+
+    int roundNumber=-1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,14 +60,14 @@ public class GameActivity extends AppCompatActivity {
             isServer=true;
             communicationServer=new CommunicationServer(this);
             serverGameThread=new ServerGameThread(this,communicationServer);
-            players[0]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp0"));
-            players[0].position=0;
-            players[1]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp1"));
-            players[1].position=1;
-            players[2]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp2"));
-            players[2].position=2;
-            players[3]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp3"));
-            players[3].position=3;
+            serverGameThread.players[0]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp0"));
+            serverGameThread.players[0].position=0;
+            serverGameThread.players[1]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp1"));
+            serverGameThread.players[1].position=1;
+            serverGameThread.players[2]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp2"));
+            serverGameThread.players[2].position=2;
+            serverGameThread.players[3]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp3"));
+            serverGameThread.players[3].position=3;
             serverGameThread.start();
         }
 

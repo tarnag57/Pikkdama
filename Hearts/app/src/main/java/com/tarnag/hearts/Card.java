@@ -1,5 +1,7 @@
 package com.tarnag.hearts;
 
+import java.util.Random;
+
 /**
  * Created by viktor on 2017. 02. 28..
  */
@@ -11,6 +13,8 @@ public class Card {
     String name;
     String bmName = "x";
     boolean selected = false;
+    float random;
+
 
 
     Card (String s){  //s=X_YY
@@ -32,6 +36,8 @@ public class Card {
         type+="_";
         if (Value<10) type+="0";
         type+=Integer.toString(Value);
+        Random rand = new Random();
+        random = rand.nextFloat();
         addName();
     }
 
