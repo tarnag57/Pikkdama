@@ -116,10 +116,6 @@ public class GamePanel extends SurfaceView implements Runnable{
     protected void drawCards(Canvas canvas) {
 
         int size = cards.size();
-
-        //if there are no cards
-        if (size == 0) return;
-
         cardsTop = (int) (screenHeight - 1.2 * desired_card_height);
         cardsBottom = cardsTop + desired_card_height;
         //computing the left and the right side of cards
