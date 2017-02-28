@@ -21,11 +21,11 @@ import java.util.Enumeration;
 public class Communication {
 
     //activities
-    ConnectActivity connectActivity;
+    ConnectActivity connectActivity = null;
 
     //PORT USED BY APPS
-    public final int clientReceivingPort = 2016;
-    public final int clientSendingPort = 2015;
+    private final int clientReceivingPort = 2016;
+    private final int clientSendingPort = 2015;
 
     boolean running = true;
 
@@ -45,6 +45,14 @@ public class Communication {
     //PARESES THE RECEIVE MESSAGES AND TAKES ACTION
     private void parseReceivedMessage (String gotMsg, String clientIP) {
 
+    }
+
+    //MESSAGE SENDING FUNCTION
+    public void sendMessage(String ip, String message) {
+        int port = clientSendingPort;
+        Log.d("sendMessage", "Sending message to " + ip + ":" + port + " says: " + message);
+        SocketSendingThread socketSendingThread=new SocketSendingThread(ip,port,message);
+        socketSendingThread.start();
     }
 
     //CLASS FOR SENDING SOCKETS
