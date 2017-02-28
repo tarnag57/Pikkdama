@@ -35,7 +35,27 @@ public class CommunicationServer {
     }
 
     private void parseReceivedMessage(String msg, String ip) {
+        //if used from connectionActivity
+        if (connectActivity != null) {
 
+            //if it was a name
+            if (msg.length() > 4) {
+                if (msg.substring(0, 4).equals("NAME")) {
+
+                    //determine received name
+                    String newPlayerName = msg.substring(5);
+                    Player newPlayer = new Player(ip, newPlayerName);
+
+                    //responds to server
+                    sendMessage(ip, "OK");
+
+                    //puts it to listView in connectionActivity
+                    connectActivity.putToList(newPlayer);
+
+                }
+            }
+            return;
+        }
     }
 
     //MESSAGE SENDING FUNCTION
@@ -169,6 +189,11 @@ public class CommunicationServer {
                 }
             }
         }
+    }
+
+    //setting running to false, to stop current serverSocket
+    void closingServerSocket() {
+        running = false;
     }
 
 }

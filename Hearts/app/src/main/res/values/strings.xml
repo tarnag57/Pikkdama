@@ -7,4 +7,12 @@
     <string name="must_enter_name">You have to enter a name</string>
     <string name="start_button">Start Game</string>
     <string name="hosting_server">Hosting Server</string>
+
+    <string-array name="Player">
+        <item>None</item>
+        <item>Player 1</item>
+        <item>Player 2</item>
+        <item>Player 3</item>
+        <item>Player 4</item>
+    </string-array>
 </resources>
