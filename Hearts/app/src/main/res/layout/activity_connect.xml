@@ -10,8 +10,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.tarnag.hearts.ConnectActivity">
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/editText"
+        android:hint="@string/name_editText"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="@string/searchServer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/button"
+        android:layout_marginStart="28dp"
+        android:layout_below="@+id/editText"
+        android:layout_alignParentStart="true"
+        android:onClick="searchServerClicked" />
+
+    <Button
+        android:text="@string/hostServer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:id="@+id/button2"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_toEndOf="@+id/button"
+        android:onClick="hostServerClicked" />
 </RelativeLayout>
