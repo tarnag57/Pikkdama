@@ -36,8 +36,29 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     public void searchServerClicked(View view) {
+        ownName = editName.getText().toString();
 
+        //check if name is empty
+        if (ownName.equals("")) {
+            writeToUI(getResources().getString(R.string.must_enter_name)+"\n");
+            return;
+        }
     }
+        Communication communication=new  Communication(this);
+        //searching for server
+
+        ip = communication.getIPAddress();
+        subIp = communication.getSubIP(ip);
+
+        for (int i = 0; i < 256; i++){
+            communication.sendMessage(subIp + "." + Integer.toString(i), "NAME." + ownName);
+            //slows down traffic
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                //e.printStackTrace();
+            }
+        }
 
     public void hostServerClicked(View view) {
 
