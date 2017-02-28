@@ -22,7 +22,7 @@ public class GamePanel extends SurfaceView implements Runnable{
     ArrayList<Card> cards = new ArrayList<>();
     //players names
     Player[] players = new Player[4];
-    //int ownPosition;
+    int ownPosition;
     //num of cards for each player
     int[] numOfCards = new int[4];
 
@@ -32,6 +32,7 @@ public class GamePanel extends SurfaceView implements Runnable{
     public static final int CARD_WIDTH = 500;
     public static final int CARD_HEIGHT = 726;
     public static final float HALF_CARD_SCALE = 0.4f;
+    public static final float OTHER_CARDS_SCALE = 0.8f;
     public int desired_card_width;
     public int desired_card_height;
     public int desired_half_card_width;
@@ -43,6 +44,9 @@ public class GamePanel extends SurfaceView implements Runnable{
     public int cardsBottom;
     private String TAG = GameActivity.class.getSimpleName();
     float initialX, initialY;
+    int leftNum;
+    int rightNum;
+    int topNum;
 
     Thread thread = null;
     boolean canDraw = false;
@@ -64,6 +68,14 @@ public class GamePanel extends SurfaceView implements Runnable{
 
     public void draw() {
         canDraw = true;
+        for (int i = 0; i < 4; i++) {
+            int cur = (ownPosition + i) % 4;
+            switch (cur) {
+                case 1: leftNum = numOfCards[i]; break;
+                case 2: topNum = numOfCards[i]; break;
+                case 3: rightNum = numOfCards[i]; break;
+            }
+        }
         Thread thread = new Thread(this);
         thread.run();
     }
@@ -92,6 +104,9 @@ public class GamePanel extends SurfaceView implements Runnable{
             canvas.drawBitmap(scaled, 0, 0, null);
 
             drawCards(canvas);
+            drawLeftCards(leftNum, canvas);
+            drawTopCards(topNum, canvas);
+            drawRightCards(rightNum, canvas);
 
             surfaceHolder.unlockCanvasAndPost(canvas);
             Log.d("run", "finished");
@@ -127,15 +142,60 @@ public class GamePanel extends SurfaceView implements Runnable{
     }
 
     protected void drawLeftCards(int num, Canvas canvas) {
+        if (num == 0) return;
+        int desiredRotatedWidth = (int) (desired_card_height * OTHER_CARDS_SCALE);
+        int desiredRotatedHeight = (int) (desired_card_width * OTHER_CARDS_SCALE);
+        int desiredHalfRotatedHeight = (int) (desired_half_card_width * 0.45f);
+        int x = (int) (- desiredRotatedWidth * 0.5f);
+        int leftCentre = (int) (cardsTop * 0.5f);
+        int sumHeight =  desiredRotatedHeight + (num - 1) * desiredHalfRotatedHeight;
+        int y = (int) (leftCentre - sumHeight/2f);
 
+        for (int i = 0; i < num; i++) {
+            //get bitmap
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.card_back_rotated);
+            Bitmap scaled = Bitmap.createScaledBitmap(bm, desiredRotatedWidth, desiredRotatedHeight, false);
+            canvas.drawBitmap(scaled, x, y, null);
+            y += desiredHalfRotatedHeight;
+        }
     }
 
     protected void drawTopCards(int num, Canvas canvas) {
+        if (num == 0) return;
+        int desiredSmallWidth = (int) (desired_card_width * OTHER_CARDS_SCALE);
+        int desiredSmalldHeight = (int) (desired_card_height * OTHER_CARDS_SCALE);
+        int desiredHalfSmallWidth = (int) (desired_half_card_width * 0.45f);
+        int y = (int) (- desiredSmalldHeight * 0.5f);
+        int topCentre = (int) (screnWidth * 0.5f);
+        int sumWidth =  desiredSmallWidth + (num - 1) * desiredHalfSmallWidth;
+        int x = (int) (topCentre - sumWidth/2f);
 
+        for (int i = 0; i < num; i++) {
+            //get bitmap
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.card_back_rotated);
+            Bitmap scaled = Bitmap.createScaledBitmap(bm, desiredSmallWidth, desiredSmalldHeight, false);
+            canvas.drawBitmap(scaled, x, y, null);
+            x += desiredHalfSmallWidth;
+        }
     }
 
     protected void drawRightCards(int num, Canvas canvas) {
+        if (num == 0) return;
+        int desiredRotatedWidth = (int) (desired_card_height * OTHER_CARDS_SCALE);
+        int desiredRotatedHeight = (int) (desired_card_width * OTHER_CARDS_SCALE);
+        int desiredHalfRotatedHeight = (int) (desired_half_card_width * 0.45f);
+        int x = (int) (screnWidth - desiredRotatedWidth * 0.5f);
+        int rightCentre = (int) (cardsTop * 0.5f);
+        int sumHeight =  desiredRotatedHeight + (num - 1) * desiredHalfRotatedHeight;
+        int y = (int) (rightCentre - sumHeight/2f);
 
+        for (int i = 0; i < num; i++) {
+            //get bitmap
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.card_back_rotated);
+            Bitmap scaled = Bitmap.createScaledBitmap(bm, desiredRotatedWidth, desiredRotatedHeight, false);
+            canvas.drawBitmap(scaled, x, y, null);
+            y += desiredHalfRotatedHeight;
+        }
     }
 
     //handles user input
@@ -198,6 +258,8 @@ public class GamePanel extends SurfaceView implements Runnable{
 
     protected void selectedCard(int index) {
         Log.d("Card was selected", cards.get(index).name);
+        cards.get(index).selected = !(cards.get(index).selected);
+        draw();
     }
 
     private void screenPressed(float x, float y) {
