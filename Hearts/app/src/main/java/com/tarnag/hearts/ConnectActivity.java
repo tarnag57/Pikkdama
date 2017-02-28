@@ -196,6 +196,10 @@ public class ConnectActivity extends AppCompatActivity {
             for (int i = 0; i < 4; i++) {
                 communicationServer.sendMessage(players.get(selectedPlayers[i]).ip, "START");
             }
+            communicationServer.running=false;
+            communicationServer.running=false;
+            communicationServer.sendmyselfport(2015);
+            communicationServer.sendmyselfport(2016);
 
             //closing serverSocket
             communicationServer.closingServerSocket();

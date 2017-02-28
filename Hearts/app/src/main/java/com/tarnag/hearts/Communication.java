@@ -52,7 +52,7 @@ public class Communication {
         ownip = getIPAddress();
         Log.d("ClientCom", "CLIENTCOM CREATED from gameActivity");
 
-        //creates listening thread and starts it
+        //creates listening thread and starts i
         SocketListeningThread socketListeningThread = new SocketListeningThread();
         socketListeningThread.start();
     }
@@ -67,7 +67,9 @@ public class Communication {
                 return;
             }
             if (gotMsg.equals("START")){
-               connectActivity.startIntentFromClient();
+                running=false;
+                connectActivity.startIntentFromClient();
+
             }
             return;
         }

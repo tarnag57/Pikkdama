@@ -95,8 +95,13 @@ public class CommunicationServer {
         sendMessage(gameActivity.serverGameThread.players[i].ip,message);
     }
 
+    public void sendmyselfport(int port){
+        SocketSendingThread socketSendingThread=new SocketSendingThread(ownip,port,"fgjhkjjhgftdfzguhi");
+        socketSendingThread.start();
+    }
+
     //CLASS FOR SENDING SOCKETS
-    private class SocketSendingThread extends Thread{
+    public class SocketSendingThread extends Thread{
         private String destIP;
         private DataOutputStream dataOutputStream;
         private String msg;
