@@ -40,17 +40,17 @@ public class ConnectActivity extends AppCompatActivity {
 
         //check if name is empty
         if (ownName.equals("")) {
-            writeToUI(getResources().getString(R.string.must_enter_name)+"\n");
+            writeToUI(getResources().getString(R.string.must_enter_name) + "\n");
             return;
         }
-    }
-        Communication communication=new  Communication(this);
+
+        communication = new Communication(this);
         //searching for server
 
         ip = communication.getIPAddress();
         subIp = communication.getSubIP(ip);
 
-        for (int i = 0; i < 256; i++){
+        for (int i = 0; i < 256; i++) {
             communication.sendMessage(subIp + "." + Integer.toString(i), "NAME." + ownName);
             //slows down traffic
             try {
@@ -59,13 +59,20 @@ public class ConnectActivity extends AppCompatActivity {
                 //e.printStackTrace();
             }
         }
+    }
 
     public void hostServerClicked(View view) {
 
     }
 
-    public void writeToUI(String msg) {
-
+    public void writeToUI(final String msg) {
+        status += msg;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textViewStatus.setText(status);
+            }
+        });
     }
 
     @Override

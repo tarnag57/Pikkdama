@@ -4,4 +4,5 @@
     <string name="hostServer_button">Szerver létrehozása</string>
     <string name="name_editText">Név</string>
     <string name="searchServer_button">Szerver keresés</string>
+    <string name="must_enter_name">Be kell írnod egy nevet</string>
 </resources>
