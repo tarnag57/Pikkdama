@@ -6,4 +6,6 @@
     <string name="searchServer_button">Szerver keresés</string>
     <string name="must_enter_name">Nevet kell választanod</string>
     <string name="waiting_for_server">Várakozás a szerverre</string>
+    <string name="start_button">Játék elindítása</string>
+    <string name="hosting_server">Szerver létrehozva</string>
 </resources>
