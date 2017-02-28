@@ -44,6 +44,16 @@ public class Communication {
 
     //PARESES THE RECEIVE MESSAGES AND TAKES ACTION
     private void parseReceivedMessage (String gotMsg, String clientIP) {
+        if (connectActivity!=null){
+            if (gotMsg.equals("OK")) {
+                connectActivity.serverIP=clientIP;
+                connectActivity.writeToUI(connectActivity.getResources().getString(R.string.waiting_for_server)+"\n");
+                return;
+            }
+            if (gotMsg.equals("START")){
+                //TODO Start game activity
+            }
+        }
 
     }
 

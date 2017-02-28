@@ -48,8 +48,8 @@ public class ConnectActivity extends AppCompatActivity {
             writeToUI(getResources().getString(R.string.must_enter_name) + "\n");
             return;
         }
+        communication = new Communication(this);
 
-        Communication communication = new Communication(this);
         //searching for server
 
         ip = communication.getIPAddress();
@@ -73,8 +73,14 @@ public class ConnectActivity extends AppCompatActivity {
         startButton.setVisibility(View.INVISIBLE);
     }
 
-    public void writeToUI(String msg) {
-
+    public void writeToUI(final String msg) {
+        status += msg;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textViewStatus.setText(status);
+            }
+        });
     }
 
     @Override
