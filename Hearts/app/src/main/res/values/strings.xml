@@ -8,6 +8,7 @@
     <string name="start_button">Start Game</string>
     <string name="hosting_server">Hosting Server</string>
     <string name="search_for_server">Searching for Server...</string>
+    <string name="failed">Failed\nPlease search again</string>
 
     <string-array name="Player">
         <item>None</item>
