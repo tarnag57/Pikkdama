@@ -114,7 +114,7 @@ public class ConnectActivity extends AppCompatActivity {
         });
     }
 
-    protected void startGameOnClick (View view) {
+    public void startGameOnClick (View view) {
 
         //when button was pushed
         int size = players.size();

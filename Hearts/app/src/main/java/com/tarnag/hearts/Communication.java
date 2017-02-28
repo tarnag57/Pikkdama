@@ -22,6 +22,7 @@ public class Communication {
 
     //activities
     ConnectActivity connectActivity = null;
+    GameActivity gameActivity = null;
 
     //PORT USED BY APPS
     private final int clientReceivingPort = 2016;
@@ -29,10 +30,12 @@ public class Communication {
 
     boolean running = true;
 
+    String ownip;
+
     //CONSTRUCTOR FOR MAIN ACTIVITY
     Communication (ConnectActivity connectActivity) {
         this.connectActivity=connectActivity;
-
+        ownip = getIPAddress();
         Log.d("ClientCom", "CLIENTCOM CREATED from gameActivity");
 
         //creates listening thread and starts it
@@ -43,7 +46,7 @@ public class Communication {
 
 
     //PARESES THE RECEIVE MESSAGES AND TAKES ACTION
-    private void parseReceivedMessage (String gotMsg, String clientIP) {
+    public void parseReceivedMessage (String gotMsg, String clientIP) {
         if (connectActivity!=null){
             if (gotMsg.equals("OK")) {
                 connectActivity.serverIP=clientIP;
@@ -59,6 +62,14 @@ public class Communication {
 
     //MESSAGE SENDING FUNCTION
     public void sendMessage(String ip, String message) {
+        if (ip.equals(ownip)) {
+            if (connectActivity != null) {
+                connectActivity.communication.parseReceivedMessage(message, ip);
+            } else if(gameActivity != null) {
+                //TODO GAMEACTIVITY
+            }
+            return;
+        }
         int port = clientSendingPort;
         Log.d("sendMessage", "Sending message to " + ip + ":" + port + " says: " + message);
         SocketSendingThread socketSendingThread=new SocketSendingThread(ip,port,message);

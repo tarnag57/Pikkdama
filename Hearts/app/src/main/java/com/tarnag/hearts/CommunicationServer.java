@@ -5,8 +5,12 @@ import android.util.Log;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 /**
  * Created by viktor on 2017. 02. 28..
@@ -16,6 +20,7 @@ public class CommunicationServer {
 
     //Activities
     ConnectActivity connectActivity = null;
+    GameActivity gameActivity = null;
 
     //PORT USED BY APPS
     private final int serverReceivingPort = 2016;
@@ -23,10 +28,12 @@ public class CommunicationServer {
 
     //Communication
     Communication communication;
+    String ownip;
 
     boolean running = true;
     CommunicationServer (ConnectActivity activity) {
         connectActivity = activity;
+        ownip = getIpAddress();
 
         //creates listening thread and starts it
         SocketListeningThread socketListeningThread = new SocketListeningThread();
@@ -60,6 +67,14 @@ public class CommunicationServer {
 
     //MESSAGE SENDING FUNCTION
     public void sendMessage(String ip, String message) {
+        if (ip.equals(ownip)) {
+            if (connectActivity != null) {
+                connectActivity.communication.parseReceivedMessage(message, ip);
+            } else if(gameActivity != null) {
+                //TODO GAMEACTIVITY
+            }
+            return;
+        }
         int port = serverSendingPort;
         Log.d("sendMessage", "Sending message to " + ip + ":" + port + " says: " + message);
         SocketSendingThread socketSendingThread=new SocketSendingThread(ip,port,message);
@@ -194,6 +209,28 @@ public class CommunicationServer {
     //setting running to false, to stop current serverSocket
     void closingServerSocket() {
         running = false;
+    }
+
+    //Returns ip of current device
+    public String getIpAddress() {
+        String ip = "";
+        try {
+            Enumeration<NetworkInterface> enumerationNetworkInterface =
+                    NetworkInterface.getNetworkInterfaces();
+            while (enumerationNetworkInterface.hasMoreElements()) {
+                NetworkInterface networkInterface = enumerationNetworkInterface.nextElement();
+                Enumeration<InetAddress> enumInetAddress = networkInterface.getInetAddresses();
+                while (enumInetAddress.hasMoreElements()) {
+                    InetAddress inetAddress = enumInetAddress.nextElement();
+                    if (inetAddress.isSiteLocalAddress()) {
+                        ip = inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        return ip;
     }
 
 }
