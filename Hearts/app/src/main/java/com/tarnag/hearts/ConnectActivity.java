@@ -20,6 +20,7 @@ public class ConnectActivity extends AppCompatActivity {
     CommunicationServer communicationServer = null;
 
     boolean isConnected = false;
+    boolean isServer = false;
 
     //UI ELEMENTS
     EditText editName;
@@ -52,6 +53,7 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     public void searchServerClicked(View view) {
+        writeToUI(getResources().getString(R.string.search_for_server));
         ownName = editName.getText().toString();
 
         //check if name is empty
@@ -78,6 +80,7 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     public void hostServerClicked(View view) {
+        isServer = true;
         writeToUI(getResources().getString(R.string.hosting_server));
         communicationServer = new CommunicationServer(this);
         listView.setVisibility(View.VISIBLE);
@@ -85,7 +88,7 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     public void writeToUI(final String msg) {
-        status += msg;
+        status = msg;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -179,6 +182,7 @@ public class ConnectActivity extends AppCompatActivity {
 
             //puts extras into intent and starts new activity
             Intent intent = new Intent(this, GameActivity.class);
+            intent.putExtra("isServer", isServer);
             intent.putExtra("playerName0", players.get(selectedPlayers[0]).playerName);
             intent.putExtra("playerIp0", players.get(selectedPlayers[0]).ip);
             intent.putExtra("playerName1", players.get(selectedPlayers[1]).playerName);
@@ -203,6 +207,17 @@ public class ConnectActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    //STARTS GameActivity IF DEVICES FUNCTIONS AS CLIENT
+    public void startIntentFromClient() {
+        communication.sendMessage(serverIP, "duvgfvefhbj");
+        //new activity for the game
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("ServerIp", serverIP);
+        intent.putExtra("OwnName", ownName);
+        this.startActivity(intent);
+        this.finish();
     }
 
     @Override

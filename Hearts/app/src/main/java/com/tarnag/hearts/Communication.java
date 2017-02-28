@@ -54,7 +54,7 @@ public class Communication {
                 return;
             }
             if (gotMsg.equals("START")){
-                //TODO Start game activity
+               connectActivity.startIntentFromClient();
             }
         }
 
