@@ -10,6 +10,7 @@ public class Card {
     int value;
     String name;
     String bmName = "x";
+    boolean selected = false;
 
 
     Card (String s){  //s=X_YY

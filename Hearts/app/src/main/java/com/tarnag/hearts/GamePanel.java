@@ -68,12 +68,6 @@ public class GamePanel extends SurfaceView implements Runnable{
         thread.run();
     }
 
-    public void reDraw() {
-        canDraw = true;
-        Thread thread = new Thread(this);
-        thread.run();
-    }
-
     @Override
     public void run() {
         while (canDraw) {
