@@ -83,12 +83,14 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     public void hostServerClicked(View view) {
+        ownName = editName.getText().toString();
         isServer = true;
         writeToUI(getResources().getString(R.string.hosting_server));
         communicationServer = new CommunicationServer(this);
         listView.setVisibility(View.VISIBLE);
         startButton.setVisibility(View.INVISIBLE);
-        Player player = new Player()
+        Player player = new Player(communication.getIPAddress(), ownName);
+        putToList(player);
     }
 
     public void writeToUI(final String msg) {
