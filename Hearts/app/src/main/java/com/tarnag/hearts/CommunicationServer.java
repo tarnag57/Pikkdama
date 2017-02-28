@@ -69,7 +69,13 @@ public class CommunicationServer {
     public void sendMessage(String ip, String message) {
         if (ip.equals(ownip)) {
             if (connectActivity != null) {
-                connectActivity.communication.parseReceivedMessage(message, ip);
+                Log.d("sendMessage", "Sending message to myself: " + message);
+                Communication communication = connectActivity.communication;
+                if (communication == null) {
+                    Log.d("sendMessage", "communication was null");
+                }
+                communication.parseReceivedMessage(message, ip);
+                Log.d("sendMessage", "Sent message to myself: " + message);
             } else if(gameActivity != null) {
                 //TODO GAMEACTIVITY
             }
