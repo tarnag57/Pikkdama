@@ -43,6 +43,15 @@ public class Communication {
         socketListeningThread.start();
     }
 
+    Communication (GameActivity activity) {
+        this.gameActivity=activity;
+        ownip = getIPAddress();
+        Log.d("ClientCom", "CLIENTCOM CREATED from gameActivity");
+
+        //creates listening thread and starts it
+        SocketListeningThread socketListeningThread = new SocketListeningThread();
+        socketListeningThread.start();
+    }
 
 
     //PARESES THE RECEIVE MESSAGES AND TAKES ACTION
@@ -64,12 +73,14 @@ public class Communication {
     public void sendMessage(String ip, String message) {
         if (ip.equals(ownip)) {
             if (connectActivity != null) {
-                connectActivity.communication.parseReceivedMessage(message, ip);
+                connectActivity.communicationServer.parseReceivedMessage(message, ip);
             } else if(gameActivity != null) {
-                //TODO GAMEACTIVITY
+                gameActivity.communicationServer.parseReceivedMessage(message,ip);
             }
             return;
         }
+
+
         int port = clientSendingPort;
         Log.d("sendMessage", "Sending message to " + ip + ":" + port + " says: " + message);
         SocketSendingThread socketSendingThread=new SocketSendingThread(ip,port,message);

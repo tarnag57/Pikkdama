@@ -8,7 +8,7 @@ public class Player {
     public int position = 0;
     public final String ip;
     public final String playerName;
-    public int score;
+    public int score=0;
 
     Player (String ip, String playerName) {
         this.ip = ip;
