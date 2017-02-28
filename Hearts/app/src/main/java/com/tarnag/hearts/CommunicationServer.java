@@ -23,8 +23,8 @@ public class CommunicationServer {
     GameActivity gameActivity = null;
 
     //PORT USED BY APPS
-    private final int serverReceivingPort = 2016;
-    private final int serverSendingPort = 2015;
+    private final int serverReceivingPort = 2015;
+    private final int serverSendingPort = 2016;
 
     //Communication
     Communication communication;
