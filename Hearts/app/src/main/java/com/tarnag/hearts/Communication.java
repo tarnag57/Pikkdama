@@ -12,6 +12,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 
 /**
@@ -76,12 +80,38 @@ public class Communication {
                     String name=msg.substring(2);
                     gameActivity.gamePanel.players[position]=new Player(null,name);
                     gameActivity.gamePanel.players[position].position=position;
+                    return;
                 }
 
                 if (gotMsg.substring(0,12).equals("PlayerScore.")){
                     String msg=gotMsg.substring(12);
                     int position=msg.charAt(0)-'0';
                     gameActivity.gamePanel.players[position].score=Integer.parseInt(msg.substring(2));
+                    return;
+                }
+            }
+            if (gotMsg.contains("ROUNDNUMBER.")){
+                if (gotMsg.substring(0,12).equals("ROUNDNUMBER.")){
+                    gameActivity.roundNumber=Integer.parseInt(gotMsg.substring(12));
+                    return;
+                }
+            }
+            if (gotMsg.contains("DEAL.")){
+                if (gotMsg.substring(0,5).equals("DEAL.")){
+                    gameActivity.gamePanel.cards.add(new Card(gotMsg.substring(5)));
+                    Collections.sort(gameActivity.gamePanel.cards,new Comparator<Card>() {
+                        @Override
+                        public int compare(Card card, Card t1) {//sorting
+                            if ((card.colour>t1.colour)||((card.colour==t1.colour) && (card.value<t1.value))) return 1;
+                            return -1;
+                        }});
+                    if (gameActivity.gamePanel.cards.size()==13){
+                        gameActivity.gamePanel.numOfCards[0]=13;
+                        gameActivity.gamePanel.numOfCards[1]=13;
+                        gameActivity.gamePanel.numOfCards[2]=13;
+                        gameActivity.gamePanel.numOfCards[3]=13;
+                        gameActivity.gamePanel.draw();
+                    }
                 }
             }
         }
