@@ -11,7 +11,7 @@ public class ConnectActivity extends AppCompatActivity {
     Communication communication = null;
     CommunicationServer communicationServer = null;
 
-    boolean isConnected=false;
+    boolean isConnected = false;
 
     //UI ELEMENTS
 
