@@ -53,6 +53,9 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     public void searchServerClicked(View view) {
+        if (isConnected) return;
+        if (isServer) return;
+
         writeToUI(getResources().getString(R.string.search_for_server));
         ownName = editName.getText().toString();
 
@@ -85,6 +88,7 @@ public class ConnectActivity extends AppCompatActivity {
         communicationServer = new CommunicationServer(this);
         listView.setVisibility(View.VISIBLE);
         startButton.setVisibility(View.INVISIBLE);
+        Player player = new Player()
     }
 
     public void writeToUI(final String msg) {

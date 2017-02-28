@@ -35,7 +35,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(gamePanel);
 
         //LOGIC
-        
+
 
     }
 
