@@ -45,84 +45,6 @@ public class Communication {
     //PARESES THE RECEIVE MESSAGES AND TAKES ACTION
     private void parseReceivedMessage (String gotMsg, String clientIP) {
 
-        //response from server confirming name
-        if (gotMsg.equals("OK") && connectActivity != null){
-            connectActivity.isConnected = true;
-            connectActivity.serverIP = clientIP;
-            writeOnUI(connectActivity.getResources().getString(R.string.waiting_for_server)+"\n");}
-
-        //starts the game
-        if (gotMsg.equals("START") && connectActivity != null){
-            running = false;
-            //helps the server to break out from infinite loop
-            sendMessage(connectActivity.serverIP,clientSendingPort, "duvgfvefhbj");
-
-            //new activity for the game
-            Intent intent = new Intent(connectActivity, GameActivity.class);
-            intent.putExtra("ServerIp", connectActivity.serverIP);
-            intent.putExtra("SendingPort", clientSendingPort);
-            intent.putExtra("ReceivingPort", clientReceivingPort);
-            intent.putExtra("OwnName", connectActivity.ownName);
-            connectActivity.startActivity(intent);
-            connectActivity.finish();
-        }
-
-        /**
-        if (gameActivity == null) return;
-
-        //THESE ARE RUNNING ONLY IF STARTED FROM GAME ACTIVITY
-        //receiving cards during dealing
-        if (gotMsg.substring(0,5).equals("DEAL.")){
-            Card card = new Card(gotMsg.substring(5));
-            gameActivity.ownCards.add(card);
-
-            //if 13 cards have been received
-            if (gameActivity.ownCards.size() == 13) {
-                Log.d("parseReceivedMessage", "GOT 13 CARDS");
-                gameActivity.startRound();
-            }
-        }
-
-        if (gotMsg.length() > 6) {
-            //giving 3 cards
-            if (gotMsg.substring(0, 7).equals("GIVING.")) {
-                Log.d("parse_GIVING", gotMsg.substring(7));
-                Card card = new Card(gotMsg.substring(7));
-                Log.d("parse_GIVING", "added card");
-                gameActivity.ownCards.add(card);
-                if (gameActivity.ownCards.size() == 13) {
-                    gameActivity.startGame();
-                }
-
-            }
-
-            //number of player
-            if (gotMsg.substring(0, 7).equals("NUMBER.")) {
-                gameActivity.roundNumber = Integer.parseInt(gotMsg.substring(7));
-            }
-        }
-
-        //your call
-        if (gotMsg.substring(0,5).equals("CALL.")) {
-            boolean clubs2 = false;
-            boolean hasBeenHearts = false;
-
-            //gets modifiers
-            if (gotMsg.length() > 5) {
-                if (gotMsg.substring(5).equals("CLUBS2")) clubs2 = true;
-                if (gotMsg.substring(5).equals("HEARTS")) hasBeenHearts = true;
-            }
-
-            gameActivity.yourCall(clubs2, hasBeenHearts);
-        }
-
-        //your turn to play a card
-        if (gotMsg.substring(0,5).equals("PLAY.")) {
-            int colourOfCall = Integer.parseInt(gotMsg.substring(5));
-            gameActivity.yourPlay(colourOfCall);
-        }*/
-
-
     }
 
     //CLASS FOR SENDING SOCKETS
@@ -256,6 +178,15 @@ public class Communication {
                     }
                 }
             }
+        }
+    }
+
+    //WRITES ON UI
+    private void writeOnUI (String msg) {
+
+        //if com is accessed from ConnectActivity
+        if (connectActivity != null) {
+            connectActivity.writeToUI(msg);
         }
     }
 

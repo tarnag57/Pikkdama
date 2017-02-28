@@ -43,6 +43,10 @@ public class ConnectActivity extends AppCompatActivity {
 
     }
 
+    public void writeToUI(String msg) {
+
+    }
+
     @Override
     protected void onPause() {
         super.onPause();

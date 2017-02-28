@@ -3,4 +3,6 @@
     <string name="name_editText">Name</string>
     <string name="searchServer_button">Search Server</string>
     <string name="hostServer_button">Host Server</string>
+    <string name="waiting_for_server">Waiting for server</string>
+    <string name="must_enter_name">You have to enter a name</string>
 </resources>
