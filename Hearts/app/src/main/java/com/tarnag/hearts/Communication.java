@@ -65,7 +65,27 @@ public class Communication {
             if (gotMsg.equals("START")){
                connectActivity.startIntentFromClient();
             }
+            return;
         }
+
+        if (gameActivity!=null){
+            if (gotMsg.contains("Player")){
+                if (gotMsg.substring(0,11).equals("PlayerName.")){
+                    String msg=gotMsg.substring(11);
+                    int position=msg.charAt(0)-'0';
+                    String name=msg.substring(2);
+                    gameActivity.gamePanel.players[position]=new Player(null,name);
+                    gameActivity.gamePanel.players[position].position=position;
+                }
+
+                if (gotMsg.substring(0,12).equals("PlayerScore.")){
+                    String msg=gotMsg.substring(12);
+                    int position=msg.charAt(0)-'0';
+                    gameActivity.gamePanel.players[position].score=Integer.parseInt(msg.substring(2));
+                }
+            }
+        }
+
 
     }
 
