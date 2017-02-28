@@ -67,13 +67,12 @@ public class ConnectActivity extends AppCompatActivity {
             return;
         }
 
-        //searching for server
-        SearchingTread searchingTread= new SearchingTread();
-        searchingTread.run();
-
         ip = communication.getIPAddress();
         subIp = communication.getSubIP(ip);
 
+        //searching for server
+        SearchingTread searchingTread= new SearchingTread();
+        searchingTread.run();
 
     }
 
