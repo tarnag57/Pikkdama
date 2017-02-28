@@ -50,6 +50,7 @@ public class ConnectActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         startButton = (Button) findViewById(R.id.startButton);
         textViewStatus = (TextView) findViewById(R.id.status);
+        editName = (EditText) findViewById(R.id.editText);
     }
 
     public void searchServerClicked(View view) {
@@ -83,9 +84,18 @@ public class ConnectActivity extends AppCompatActivity {
     }
 
     public void hostServerClicked(View view) {
+        Log.d("hostServerClicked", "started");
+
         ownName = editName.getText().toString();
+
+        if (ownName.equals("")) {
+            writeToUI(getResources().getString(R.string.must_enter_name) + "\n");
+            return;
+        }
+
         isServer = true;
         writeToUI(getResources().getString(R.string.hosting_server));
+        Log.d("hostServerClicked", "Written to ui");
         communicationServer = new CommunicationServer(this);
         listView.setVisibility(View.VISIBLE);
         startButton.setVisibility(View.INVISIBLE);
