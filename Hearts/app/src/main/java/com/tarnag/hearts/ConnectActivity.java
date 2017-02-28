@@ -81,6 +81,7 @@ public class ConnectActivity extends AppCompatActivity {
         Log.d("hostServerClicked", "started");
 
         ownName = editName.getText().toString();
+        serverIP = communication.ownip;
 
         if (ownName.equals("")) {
             writeToUI(getResources().getString(R.string.must_enter_name) + "\n");
@@ -94,11 +95,7 @@ public class ConnectActivity extends AppCompatActivity {
 
         listView.setVisibility(View.VISIBLE);
         startButton.setVisibility(View.VISIBLE);
-
-        Log.d("hostServerClicked", "visibility set");
-
-        Log.d("ownip", communication.ownip);
-        Log.d("owName", ownName);
+        
         Player player = new Player(communication.ownip, ownName);
         Log.d("hostServerClicked", "Player created");
         putToList(player);
@@ -189,6 +186,8 @@ public class ConnectActivity extends AppCompatActivity {
         //if selection was valid
         if (validity) {
 
+            Log.d("startGameOnClick", "valid selection");
+
             //pings selected devices
             for (int i = 0; i < 4; i++) {
                 communicationServer.sendMessage(players.get(selectedPlayers[i]).ip, "START");
@@ -215,6 +214,7 @@ public class ConnectActivity extends AppCompatActivity {
 
 
         } else {
+            Log.d("startGameOnClick", "invalid selection");
             final String message = "Invalid selection";
             runOnUiThread(new Runnable() {
                 @Override
