@@ -21,6 +21,7 @@ public class ConnectActivity extends AppCompatActivity {
 
     boolean isConnected = false;
     boolean isServer = false;
+    boolean isPressed=false;
 
     //UI ELEMENTS
     EditText editName;
@@ -57,7 +58,9 @@ public class ConnectActivity extends AppCompatActivity {
     public void searchServerClicked(View view) {
         if (isConnected) return;
         if (isServer) return;
+        if (isPressed) return;
 
+        isPressed=true;
         writeToUI(getResources().getString(R.string.search_for_server));
         ownName = editName.getText().toString();
 
@@ -261,6 +264,14 @@ public class ConnectActivity extends AppCompatActivity {
                     //e.printStackTrace();
                 }
             }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                //e.printStackTrace();
+            }
+
+            isPressed=false;
         }
     }
 }
