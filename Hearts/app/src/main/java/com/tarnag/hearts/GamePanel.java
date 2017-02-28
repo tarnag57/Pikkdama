@@ -16,6 +16,17 @@ import java.util.ArrayList;
  */
 
 public class GamePanel extends SurfaceView implements Runnable{
+
+    //VARIABLES USED FROM OUTSIDE
+    //own cards
+    ArrayList<Card> cards = new ArrayList<>();
+    //players names
+    Player[] players = new Player[4];
+    int ownPosition;
+    //num of cards for each player
+    int[] numOfCards = new int[4];
+
+
     public static final int WIDTH = 1600;
     public static final int HEIGHT = 1200;
     public static final int CARD_WIDTH = 500;
@@ -43,8 +54,6 @@ public class GamePanel extends SurfaceView implements Runnable{
 
     public boolean canPress = true;
 
-    //CARDS
-    ArrayList<Card> cards = new ArrayList<>();
 
     public GamePanel(Context context) {
         super(context);
@@ -54,6 +63,12 @@ public class GamePanel extends SurfaceView implements Runnable{
     }
 
     public void draw() {
+        canDraw = true;
+        Thread thread = new Thread(this);
+        thread.run();
+    }
+
+    public void reDraw() {
         canDraw = true;
         Thread thread = new Thread(this);
         thread.run();
