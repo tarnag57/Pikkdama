@@ -97,9 +97,14 @@ public class ConnectActivity extends AppCompatActivity {
         writeToUI(getResources().getString(R.string.hosting_server));
         Log.d("hostServerClicked", "Written to ui");
         communicationServer = new CommunicationServer(this);
+        Log.d("hostServerClicked", "comServer started");
         listView.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        Player player = new Player(communication.getIPAddress(), ownName);
+        startButton.setVisibility(View.VISIBLE);
+        Log.d("hostServerClicked", "visibility has been set");
+        Log.d("ownip", communication.ownip);
+        Log.d("owName", ownName);
+        Player player = new Player(communication.ownip, ownName);
+        Log.d("hostServerClicked", "Player created");
         putToList(player);
     }
 
