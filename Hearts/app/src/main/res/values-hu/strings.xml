@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pikkdáma</string>
+    <string name="hostServer_button">Szerver létrehozása</string>
+    <string name="name_editText">Név</string>
+    <string name="searchServer_button">Szerver keresés</string>
+</resources>
