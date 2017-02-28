@@ -51,6 +51,7 @@ public class ConnectActivity extends AppCompatActivity {
         startButton = (Button) findViewById(R.id.startButton);
         textViewStatus = (TextView) findViewById(R.id.status);
         editName = (EditText) findViewById(R.id.editText);
+        communication = new Communication(this);
     }
 
     public void searchServerClicked(View view) {
@@ -65,7 +66,6 @@ public class ConnectActivity extends AppCompatActivity {
             writeToUI(getResources().getString(R.string.must_enter_name) + "\n");
             return;
         }
-        communication = new Communication(this);
 
         //searching for server
 
@@ -95,12 +95,14 @@ public class ConnectActivity extends AppCompatActivity {
 
         isServer = true;
         writeToUI(getResources().getString(R.string.hosting_server));
-        Log.d("hostServerClicked", "Written to ui");
+
         communicationServer = new CommunicationServer(this);
-        Log.d("hostServerClicked", "comServer started");
+
         listView.setVisibility(View.VISIBLE);
         startButton.setVisibility(View.VISIBLE);
-        Log.d("hostServerClicked", "visibility has been set");
+
+        Log.d("hostServerClicked", "visibility set");
+
         Log.d("ownip", communication.ownip);
         Log.d("owName", ownName);
         Player player = new Player(communication.ownip, ownName);
