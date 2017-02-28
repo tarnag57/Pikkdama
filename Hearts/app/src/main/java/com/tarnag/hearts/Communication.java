@@ -129,13 +129,15 @@ public class Communication {
 
     //MESSAGE SENDING FUNCTION
     public void sendMessage(String ip, String message) {
-        if (ip.equals(ownip)) {
-            if (connectActivity != null) {
-                connectActivity.communicationServer.parseReceivedMessage(message, ip);
-            } else if(gameActivity != null) {
-                gameActivity.communicationServer.parseReceivedMessage(message,ip);
+        if (connectActivity.isServer) {
+            if (ip.equals(ownip)) {
+                if (connectActivity != null) {
+                    connectActivity.communicationServer.parseReceivedMessage(message, ip);
+                } else if (gameActivity != null) {
+                    gameActivity.communicationServer.parseReceivedMessage(message, ip);
+                }
+                return;
             }
-            return;
         }
 
 
