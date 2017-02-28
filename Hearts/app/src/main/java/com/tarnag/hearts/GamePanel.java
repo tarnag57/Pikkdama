@@ -114,9 +114,8 @@ public class GamePanel extends SurfaceView implements Runnable{
     }
 
     protected void drawCards(Canvas canvas) {
-
         int size = cards.size();
-        cardsTop = (int) (screenHeight - 1.2 * desired_card_height);
+        cardsTop = (int) (screenHeight - 0.75 * desired_card_height);
         cardsBottom = cardsTop + desired_card_height;
         //computing the left and the right side of cards
         int cardRowWidth = desired_card_width + (size - 1) * desired_half_card_width;
@@ -124,15 +123,17 @@ public class GamePanel extends SurfaceView implements Runnable{
         cardsRight = cardsLeft + cardRowWidth;
         int x = cardsLeft;
         int y = cardsTop;
+        int selectedUp = (int) (desired_card_height * 0.3f);
         for (int i = 0; i < size; i++) {
             //get bitmap
-            Log.d("Card number " + i, cards.get(i).bmName);
             int id = getResources().getIdentifier(cards.get(i).bmName, "drawable", context.getPackageName());
             Bitmap bm = BitmapFactory.decodeResource(getResources(), id);
-            Log.d("des_card_width", String.valueOf(desired_card_width));
-            Log.d("des_card_height", String.valueOf(desired_card_height));
             Bitmap scaled = Bitmap.createScaledBitmap(bm, desired_card_width, desired_card_height, false);
+            if (cards.get(i).selected) {
+                y -= selectedUp;
+            }
             canvas.drawBitmap(scaled, x, y, null);
+            y = cardsTop;
             x += desired_half_card_width;
         }
     }
