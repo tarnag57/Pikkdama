@@ -62,11 +62,11 @@ public class GameActivity extends AppCompatActivity {
             serverGameThread=new ServerGameThread(this,communicationServer);
             serverGameThread.players[0]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp0"));
             serverGameThread.players[0].position=0;
-            serverGameThread.players[1]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp1"));
+            serverGameThread.players[1]=new Player(intent.getStringExtra("playerIp1"),intent.getStringExtra("NameIp1"));
             serverGameThread.players[1].position=1;
-            serverGameThread.players[2]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp2"));
+            serverGameThread.players[2]=new Player(intent.getStringExtra("playerIp2"),intent.getStringExtra("NameIp2"));
             serverGameThread.players[2].position=2;
-            serverGameThread.players[3]=new Player(intent.getStringExtra("playerIp0"),intent.getStringExtra("NameIp3"));
+            serverGameThread.players[3]=new Player(intent.getStringExtra("playerIp3"),intent.getStringExtra("NameIp3"));
             serverGameThread.players[3].position=3;
             serverGameThread.start();
         }
