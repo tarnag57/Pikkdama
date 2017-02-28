@@ -68,19 +68,13 @@ public class ConnectActivity extends AppCompatActivity {
         }
 
         //searching for server
+        SearchingTread searchingTread= new SearchingTread();
+        searchingTread.run();
 
         ip = communication.getIPAddress();
         subIp = communication.getSubIP(ip);
 
-        for (int i = 0; i < 256; i++) {
-            communication.sendMessage(subIp + "." + Integer.toString(i), "NAME." + ownName);
-            //slows down traffic
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                //e.printStackTrace();
-            }
-        }
+
     }
 
     public void hostServerClicked(View view) {
@@ -252,4 +246,23 @@ public class ConnectActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
+
+    public class SearchingTread extends Thread {
+
+        @Override
+        public void run() {
+            for (int i = 0; i < 256; i++) {
+                communication.sendMessage(subIp + "." + Integer.toString(i), "NAME." + ownName);
+                //slows down traffic
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    //e.printStackTrace();
+                }
+            }
+        }
+    }
 }
+
+
+
