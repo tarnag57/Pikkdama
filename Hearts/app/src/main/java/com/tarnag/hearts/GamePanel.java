@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by viktor on 2017. 02. 28..
  */
 
-public class GamePanel extends SurfaceView implements Runnable{
+public class GamePanel extends SurfaceView implements Runnable{ //TODO detect selected card when it's selected
 
     //VARIABLES USED FROM OUTSIDE
     //own cards
