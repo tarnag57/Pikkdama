@@ -64,6 +64,7 @@ public class Communication {
             if (gotMsg.equals("OK")) {
                 connectActivity.serverIP=clientIP;
                 connectActivity.writeToUI(connectActivity.getResources().getString(R.string.waiting_for_server)+"\n");
+                connectActivity.isConnected=true;
                 return;
             }
             if (gotMsg.equals("START")){
