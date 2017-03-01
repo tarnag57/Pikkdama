@@ -51,6 +51,9 @@ public class GameActivity extends AppCompatActivity {
         //set to full screen
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        //keep screen on
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         //custom view
         gamePanel = new GamePanel(this, this);
         setContentView(gamePanel);
