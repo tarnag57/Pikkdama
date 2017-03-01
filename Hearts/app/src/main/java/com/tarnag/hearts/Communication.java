@@ -111,8 +111,8 @@ public class Communication {
                     Collections.sort(gameActivity.gamePanel.cards,new Comparator<Card>() {
                         @Override
                         public int compare(Card card, Card t1) {//sorting
-                            if ((card.colour>t1.colour)||((card.colour==t1.colour) && (card.value<t1.value))) return 1;
-                            return -1;
+                            if ((card.colour>t1.colour)||((card.colour==t1.colour) && (card.value<t1.value))) return -1;
+                            return 1;
                         }});
                     if (gameActivity.gamePanel.cards.size()==13){
                         gameActivity.gamePanel.numOfCards[0]=13;
