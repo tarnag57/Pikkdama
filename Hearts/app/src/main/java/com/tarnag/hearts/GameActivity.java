@@ -106,7 +106,7 @@ public class GameActivity extends AppCompatActivity {
                 //deleting from game panel's cards
                 for (int j = 0; j < gamePanel.cards.size(); j++) {
                     if (gamePanel.cards.get(j).type.equals(cards.get(i).type)) {
-                        cards.remove(j);
+                        gamePanel.cards.remove(j);
                         break;
                     }
                 }
