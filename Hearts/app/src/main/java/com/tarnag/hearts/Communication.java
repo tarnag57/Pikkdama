@@ -140,17 +140,32 @@ public class Communication {
 
     //MESSAGE SENDING FUNCTION
     public void sendMessage(String ip, String message) {
-        if (connectActivity.isServer) {
-            if (ip.equals(ownip)) {
-                if (connectActivity != null) {
-                    connectActivity.communicationServer.parseReceivedMessage(message, ip);
-                } else if (gameActivity != null) {
-                    gameActivity.communicationServer.parseReceivedMessage(message, ip);
+
+        if (connectActivity != null) {
+            if (connectActivity.isServer) {
+                if (ip.equals(ownip)) {
+                    if (connectActivity != null) {
+                        connectActivity.communicationServer.parseReceivedMessage(message, ip);
+                    } else if (gameActivity != null) {
+                        gameActivity.communicationServer.parseReceivedMessage(message, ip);
+                    }
                 }
                 return;
             }
         }
 
+        if (gameActivity != null) {
+            if (gameActivity.isServer) {
+                if (ip.equals(ownip)) {
+                    if (connectActivity != null) {
+                        connectActivity.communicationServer.parseReceivedMessage(message, ip);
+                    } else if (gameActivity != null) {
+                        gameActivity.communicationServer.parseReceivedMessage(message, ip);
+                    }
+                }
+                return;
+            }
+        }
 
         int port = clientSendingPort;
         Log.d("sendMessage", "Sending message to " + ip + ":" + port + " says: " + message);
