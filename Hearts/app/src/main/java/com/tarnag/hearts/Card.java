@@ -67,6 +67,10 @@ public class Card {
         name = suit + " " + symbol;
 
         bmName += "_of_" + suit;
+
+        if ((value > 10) && (value < 14)) {
+            bmName += "2";
+        }
     }
 
 }

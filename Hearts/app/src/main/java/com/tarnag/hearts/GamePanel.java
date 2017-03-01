@@ -48,6 +48,11 @@ public class GamePanel extends SurfaceView implements Runnable{
     int rightNum;
     int topNum;
 
+    //OK button
+    int okX;
+    int okY;
+    int scaledOkHeight;
+
     Thread thread = null;
     boolean canDraw = false;
 
@@ -55,6 +60,11 @@ public class GamePanel extends SurfaceView implements Runnable{
     Canvas canvas;
     SurfaceHolder surfaceHolder;
     Context context;
+
+    Bitmap scaledBackground = null;
+    Bitmap scaledRotated = null;
+    Bitmap scaledBack = null;
+    Bitmap scaledOK = null;
 
     public boolean canPress = true;
 
@@ -108,6 +118,20 @@ public class GamePanel extends SurfaceView implements Runnable{
             drawTopCards(topNum, canvas);
             drawRightCards(rightNum, canvas);
 
+            //drawing ok button
+            Bitmap okButton;
+            if (scaledOK != null) {
+                okButton = scaledOK;
+            } else {
+                scaledOkHeight = (int) (screenHeight * 0.1);
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.okbutton);
+                okButton = Bitmap.createScaledBitmap(bm, scaledOkHeight, scaledOkHeight, false);
+                scaledOK = okButton;
+            }
+            okY = (int) (screenHeight * 0.85);
+            okX = (int) (screnWidth * 0.9);
+            canvas.drawBitmap(okButton, okX, okY, null);
+
             surfaceHolder.unlockCanvasAndPost(canvas);
             Log.d("run", "finished");
         }
@@ -150,8 +174,14 @@ public class GamePanel extends SurfaceView implements Runnable{
 
         for (int i = 0; i < num; i++) {
             //get bitmap
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.card_back_rotated);
-            Bitmap scaled = Bitmap.createScaledBitmap(bm, desiredRotatedWidth, desiredRotatedHeight, false);
+            Bitmap scaled;
+            if (scaledRotated != null) {
+                scaled = scaledRotated;
+            } else {
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.card_back_rotated);
+                scaled = Bitmap.createScaledBitmap(bm, desiredRotatedWidth, desiredRotatedHeight, false);
+                scaledRotated = scaled;
+            }
             canvas.drawBitmap(scaled, x, y, null);
             y += desiredHalfRotatedHeight;
         }
@@ -169,8 +199,14 @@ public class GamePanel extends SurfaceView implements Runnable{
 
         for (int i = 0; i < num; i++) {
             //get bitmap
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.card_back_rotated);
-            Bitmap scaled = Bitmap.createScaledBitmap(bm, desiredSmallWidth, desiredSmalldHeight, false);
+            Bitmap scaled;
+            if (scaledBack != null) {
+                scaled = scaledBack;
+            } else {
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.card_back_rotated);
+                scaled = Bitmap.createScaledBitmap(bm, desiredSmallWidth, desiredSmalldHeight, false);
+                scaledBack = scaled;
+            }
             canvas.drawBitmap(scaled, x, y, null);
             x += desiredHalfSmallWidth;
         }
@@ -188,8 +224,14 @@ public class GamePanel extends SurfaceView implements Runnable{
 
         for (int i = 0; i < num; i++) {
             //get bitmap
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.card_back_rotated);
-            Bitmap scaled = Bitmap.createScaledBitmap(bm, desiredRotatedWidth, desiredRotatedHeight, false);
+            Bitmap scaled;
+            if (scaledRotated != null) {
+                scaled = scaledRotated;
+            } else {
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.card_back_rotated);
+                scaled = Bitmap.createScaledBitmap(bm, desiredRotatedWidth, desiredRotatedHeight, false);
+                scaledRotated = scaled;
+            }
             canvas.drawBitmap(scaled, x, y, null);
             y += desiredHalfRotatedHeight;
         }
@@ -259,6 +301,10 @@ public class GamePanel extends SurfaceView implements Runnable{
         draw();
     }
 
+    protected void okButtonPressed() {
+        Log.d("okButtonPressed", "Ok button was pressed");
+    }
+
     private void screenPressed(float x, float y) {
         if (canPress) {
             if ((cardsTop < y) && (y < cardsBottom)) {
@@ -279,6 +325,13 @@ public class GamePanel extends SurfaceView implements Runnable{
                         index = size - 1;
                     }
                     selectedCard(index);
+                }
+            }
+
+            //checking for ok button
+            if ((okX < x) && (x < okX + scaledOkHeight)) {
+                if ((okY < y) && (y < okY + scaledOkHeight)) {
+                    okButtonPressed();
                 }
             }
         }
