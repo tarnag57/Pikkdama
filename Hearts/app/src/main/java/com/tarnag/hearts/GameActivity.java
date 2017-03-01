@@ -133,7 +133,9 @@ public class GameActivity extends AppCompatActivity {
 
             gamePanel.canPress = false;
             isGiving = false;
-            gamePanel.draw();
+            if (gamePanel.cards.size() == 13) {
+                gamePanel.draw();
+            }
 
         }
 
