@@ -277,8 +277,10 @@ public class ConnectActivity extends AppCompatActivity {
                 //e.printStackTrace();
             }
 
-            writeToUI(getResources().getString(R.string.failed));
-            isPressed=false;
+            if (!isConnected) {
+                writeToUI(getResources().getString(R.string.failed));
+                isPressed=false;
+            }
         }
     }
 }
