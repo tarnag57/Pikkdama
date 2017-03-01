@@ -115,6 +115,13 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
 
+            if (buffer != null) {
+                for (int i = 0; i < buffer.size(); i++) {
+                    gamePanel.cards.add(buffer.get(i));
+                }
+                buffer = null;
+            }
+
             gamePanel.canPress = false;
             isGiving = false;
             gamePanel.draw();
