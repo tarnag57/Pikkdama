@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -117,9 +118,17 @@ public class GameActivity extends AppCompatActivity {
 
             if (buffer != null) {
                 for (int i = 0; i < buffer.size(); i++) {
+                    Log.d(Integer.toString(i) + ". element of buffer: ", buffer.get(i).type);
                     gamePanel.cards.add(buffer.get(i));
                 }
                 buffer = null;
+                //sorting cards
+                Collections.sort(gamePanel.cards,new Comparator<Card>() {
+                    @Override
+                    public int compare(Card card, Card t1) {//sorting
+                        if ((card.colour>t1.colour)||((card.colour==t1.colour) && (card.value<t1.value))) return -1;
+                        return 1;
+                    }});
             }
 
             gamePanel.canPress = false;
@@ -134,7 +143,6 @@ public class GameActivity extends AppCompatActivity {
 
         //if player hasn't given cards
         if (isGiving) {
-            buffer = new ArrayList<>();
             buffer.add(card);
         } else {
             gamePanel.cards.add(card);
@@ -175,6 +183,7 @@ public class GameActivity extends AppCompatActivity {
         if (roundNumber % 4 != 0) {
             gamePanel.canPress = true;
             isGiving = true;
+            buffer = new ArrayList<>();
         } else {
             //skipping to start round
             startRound();
