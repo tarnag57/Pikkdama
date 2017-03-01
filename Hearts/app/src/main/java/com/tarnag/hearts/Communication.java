@@ -120,8 +120,16 @@ public class Communication {
                         gameActivity.gamePanel.numOfCards[2]=13;
                         gameActivity.gamePanel.numOfCards[3]=13;
                         gameActivity.gamePanel.draw();
+                        gameActivity.giving();
                     }
                     return;
+                }
+            }
+
+            if (gotMsg.contains("GIVING.")) {
+                if (gotMsg.substring(0,7).equals("GIVING.")) {
+                    Card card = new Card(gotMsg.substring(7));
+                    gameActivity.gotGiving(card);
                 }
             }
         }

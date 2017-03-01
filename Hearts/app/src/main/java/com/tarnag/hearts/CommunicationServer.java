@@ -71,6 +71,17 @@ public class CommunicationServer {
             }
             return;
         }
+
+        if (gameActivity != null) {
+
+            //giving
+            if (msg.length() > 6) {
+                if (msg.substring(0,6).equals("GIVING")) {
+                    gameActivity.serverGameThread.cardGiven(ip, msg);
+                }
+            }
+
+        }
     }
 
     //MESSAGE SENDING FUNCTION

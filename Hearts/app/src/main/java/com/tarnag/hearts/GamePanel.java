@@ -25,6 +25,10 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
     int ownPosition;
     //num of cards for each player
     int[] numOfCards = new int[4];
+    //can the player interact
+    public boolean canPress = false;
+
+    GameActivity gameActivity;
 
 
     public static final int WIDTH = 1600;
@@ -66,11 +70,9 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
     Bitmap scaledBack = null;
     Bitmap scaledOK = null;
 
-    public boolean canPress = true;
-
-
-    public GamePanel(Context context) {
+    public GamePanel(Context context, GameActivity gameActivity) {
         super(context);
+        this.gameActivity = gameActivity;
         this.context = context;
         background = BitmapFactory.decodeResource(getResources(), R.drawable.table_background);
 
@@ -303,6 +305,14 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
 
     protected void okButtonPressed() {
         Log.d("okButtonPressed", "Ok button was pressed");
+        ArrayList<Card> selected = new ArrayList<>();
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).selected) {
+                selected.add(cards.get(i));
+            }
+        }
+        gameActivity.cardsSelected(selected);
+
     }
 
     private void screenPressed(float x, float y) {
