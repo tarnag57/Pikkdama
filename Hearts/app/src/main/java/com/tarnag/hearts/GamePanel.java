@@ -245,6 +245,7 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
 
     protected void drawCenter() {
 
+        if (gameActivity.playedCards == null) return;
         if (gameActivity.playedCards.size() == 0) return;
         int centerLeft = (int) (screnWidth * 0.2f);
         int centerTop = (int) (screenHeight * 0.35f);
