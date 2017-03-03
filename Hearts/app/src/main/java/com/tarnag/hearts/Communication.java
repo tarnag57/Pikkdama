@@ -133,6 +133,26 @@ public class Communication {
                     gameActivity.gotGiving(card);
                 }
             }
+
+            if (gotMsg.length() > 4) {
+                if (gotMsg.substring(0,5).equals("CALL.")) {
+                    int player = Integer.parseInt(gotMsg.substring(5,6));
+                    boolean hearts = false;
+                    if (gotMsg.length() > 9) {
+                        hearts = true;
+                    }
+                    gameActivity.call(player, hearts);
+                }
+            }
+
+            if (gotMsg.length() > 7) {
+                if (gotMsg.substring(0,7).equals("PLAYED.")) {
+                    int player = Integer.parseInt(gotMsg.substring(7,8));
+                    String cardType = gotMsg.substring(9);
+                    Card played = new Card(cardType);
+                    gameActivity.cardPlayed(player, played);
+                }
+            }
         }
 
 

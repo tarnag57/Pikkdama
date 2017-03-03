@@ -27,6 +27,9 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
     int[] numOfCards = new int[4];
     //can the player interact
     public boolean canPress = false;
+    //token
+    public boolean isToken = false;
+    public int token = 0;
 
     GameActivity gameActivity;
 

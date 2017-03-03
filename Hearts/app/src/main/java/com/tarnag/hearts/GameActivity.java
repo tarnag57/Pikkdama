@@ -33,6 +33,11 @@ public class GameActivity extends AppCompatActivity {
     boolean isGiving = false;
     boolean isInGame = false;
 
+    boolean hearts = false;
+    boolean isYouCall = false;
+
+    boolean isYouPlay = false;
+
     Communication communication;
     CommunicationServer communicationServer = null;
     ServerGameThread serverGameThread = null;
@@ -40,6 +45,9 @@ public class GameActivity extends AppCompatActivity {
     ArrayList<Card> buffer = null;
 
     int roundNumber = -1;
+
+    public Card calledCard = null;
+    ArrayList<Card> playedCards = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,8 +143,57 @@ public class GameActivity extends AppCompatActivity {
             isGiving = false;
             if (gamePanel.cards.size() == 13) {
                 gamePanel.draw();
+                startRound();
             }
 
+        }
+
+        if (isYouCall) {
+            if (cards.size() != 1) {
+                return;
+            }
+            if (!canCallThisCard(cards.get(0))) {
+                return;
+            }
+
+            //remove card form own cards
+            for (int j = 0; j < gamePanel.cards.size(); j++) {
+                if (gamePanel.cards.get(j).type.equals(cards.get(0).type)) {
+                    gamePanel.cards.remove(j);
+                    break;
+                }
+            }
+
+            gamePanel.canPress = false;
+            isYouCall = false;
+            //send back
+            communication.sendMessage(serverIp, "PLAYED." + cards.get(0).type);
+
+            gamePanel.draw();
+        }
+
+        if (isYouPlay) {
+            if (cards.size() != 1) {
+                return;
+            }
+            if (!canPlayThisCard(cards.get(0))) {
+                return;
+            }
+
+            //remove card form own cards
+            for (int j = 0; j < gamePanel.cards.size(); j++) {
+                if (gamePanel.cards.get(j).type.equals(cards.get(0).type)) {
+                    gamePanel.cards.remove(j);
+                    break;
+                }
+            }
+
+            gamePanel.canPress = false;
+            isYouPlay = false;
+            //send back
+            communication.sendMessage(serverIp, "PLAYED." + cards.get(0).type);
+
+            gamePanel.draw();
         }
 
     }
@@ -178,6 +235,43 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    //someone played a card
+    public void cardPlayed(int player, Card card) {
+
+        if (playedCards == null) {
+            playedCards = new ArrayList<>();
+        }
+
+        //add played cards
+        playedCards.add(card);
+
+        //move token
+        gamePanel.isToken = true;
+        gamePanel.token = (player + 1) % 4;
+
+
+        gamePanel.draw();
+
+        if (playedCards.size() == 4) {
+            endCall();
+            return;
+        }
+
+        if ((player + 1) % 4 == gamePanel.ownPosition) {
+            youPlay();
+        }
+
+    }
+
+    public void youPlay() {
+        isYouPlay = true;
+        gamePanel.canPress = true;
+    }
+
+    public void endCall() {
+        //TODO ending round
+    }
+
     //giving
     public void giving() {
 
@@ -202,6 +296,83 @@ public class GameActivity extends AppCompatActivity {
                 communication.sendMessage(serverIp, "CLUBS2");
             }
         }
+    }
+
+    public void call(int player, boolean hearts) {
+
+        //determine token
+        gamePanel.token = player;
+        gamePanel.isToken = true;
+        gamePanel.draw();
+
+        //if you call
+        if (player == gamePanel.ownPosition) {
+            youCall(hearts);
+        }
+
+    }
+
+    public boolean canCallThisCard(Card card) {
+
+        //if this is the first round -> clubs2
+        if (gamePanel.cards.size() == 13) {
+            return card.type.equals("4_02");
+        }
+
+        //if hearts has been played -> you can call anything
+        if (hearts) {
+            return true;
+        }
+
+        if (card.colour != 1) {
+            return true;
+        }
+
+        //if you only have hearts
+        boolean onlyHearts = true;
+        for (int i = 0; i < gamePanel.cards.size(); i++) {
+            if (gamePanel.cards.get(i).colour != 1) {
+                onlyHearts = false;
+            }
+        }
+        return onlyHearts;
+
+    }
+
+    public boolean canPlayThisCard(Card card) {
+
+        //if you have same colour
+        if (card.colour == playedCards.get(0).colour) {
+            return true;
+        }
+
+        //if you don't have same colour
+        boolean hasSame = false;
+        for (int i = 0; i < gamePanel.cards.size(); i++) {
+            if (gamePanel.cards.get(i).colour != 1) {
+                hasSame = true;
+            }
+        }
+
+        //if you don't have same
+        if (hasSame) {
+            return false;
+        }
+
+        //if this is the first round
+        if (gamePanel.cards.size() == 13) {
+            
+        }
+
+        return true;
+
+        //TODO implement this!!!
+    }
+
+    public void youCall(boolean hearts) {
+        this.hearts = hearts;
+        isYouCall = true;
+        gamePanel.canPress = true;
     }
 
     @Override
