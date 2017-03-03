@@ -17,6 +17,7 @@ import java.util.Enumeration;
  */
 
 public class CommunicationServer {
+    Round round=null;
 
     //Activities
     ConnectActivity connectActivity = null;
@@ -78,9 +79,20 @@ public class CommunicationServer {
             if (msg.length() > 6) {
                 if (msg.substring(0,6).equals("GIVING")) {
                     gameActivity.serverGameThread.cardGiven(ip, msg);
+                    return;
                 }
             }
-
+            if (msg.length()==6){
+                if (msg.equals("CLUBS2")){
+                    int pos=0;
+                    for (int i=0;i<4;i++){
+                        if (gameActivity.serverGameThread.players[i].ip.equals(ip)) {
+                            pos=i;
+                        }
+                    }
+                    gameActivity.serverGameThread.addCard(pos,msg);
+                }
+            }
         }
     }
 
