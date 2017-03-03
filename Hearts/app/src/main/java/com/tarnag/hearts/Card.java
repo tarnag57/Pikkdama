@@ -14,6 +14,7 @@ public class Card {
     String bmName = "x";
     boolean selected = false;
     float random;
+    int point=0;
 
 
 
@@ -26,6 +27,7 @@ public class Card {
         colour=s.substring(0,1);
         this.colour=Integer.parseInt(colour);
         addName();
+        addPoint();
     }
 
     Card (int Colour,int Value){
@@ -39,6 +41,7 @@ public class Card {
         Random rand = new Random();
         random = rand.nextFloat();
         addName();
+        addPoint();
     }
 
     //Adds name string to display for user
@@ -71,6 +74,11 @@ public class Card {
         if ((value > 10) && (value < 14)) {
             bmName += "2";
         }
+    }
+
+    void addPoint(){
+        if (colour==1) point=1;
+        if (colour==3 && value==12) point=13;
     }
 
 }
