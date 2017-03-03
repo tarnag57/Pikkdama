@@ -24,14 +24,14 @@ public class Round {
         this.gameActivity=gameActivity;
         this.communicationServer=communicationServer;
         this.serverGameThread=serverGameThread;
-        addCard(card);
+        //addCard(card);
         currentposition=pos-1;
     }
 
     void addCard(String card){
         currentposition++;
         for (int i=0;i<4;i++){
-            communicationServer.sendMessage(i,"PLAYED."+Integer.toString(currentposition)+card);
+            communicationServer.sendMessage(i,"PLAYED."+Integer.toString(currentposition%4)+card);
         }
         Card car= new Card(card);
         point+=car.point;
@@ -48,7 +48,7 @@ public class Round {
                 }
         }
 
-        if (startposotion-currentposition==-2){
+        if ((startposotion-currentposition)%4==3){
             finishround();
         }
     }
@@ -59,16 +59,26 @@ public class Round {
         serverGameThread.pointsInRound[placeofhighestcardvalue]+=point;
 
         if (serverGameThread.callNumber==13){
-            //TODO átírni a pontokat
-        }
+            //checking if someone got all points
+            boolean isAll=false;
+            for (int i=0;i<4;i++){
+                if (serverGameThread.pointsInRound[i]==26) isAll=true;
+            }
 
-        serverGameThread.callNumber=0;
+            for (int i=0;i<4;i++){
+                int pff;
+                if (!isAll) pff=serverGameThread.pointsInRound[i]; else pff=26-serverGameThread.pointsInRound[i];
+                serverGameThread.points[i]+=pff;
+                serverGameThread.pointsInRound[i]=0;
+            }
+            serverGameThread.callNumber=0;
+        }
 
         //calling next round
         for (int i=0;i<4;i++) {
         if (gameActivity.serverGameThread.canCallHearts)
-            communicationServer.sendMessage(i, "CALL.." + Integer.toString(placeofhighestcardvalue) + "HEARTS");
-            else communicationServer.sendMessage(i, "CALL" + Integer.toString(placeofhighestcardvalue));
+            communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue) + ".HEARTS");
+            else communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue));
         }
     }
 }

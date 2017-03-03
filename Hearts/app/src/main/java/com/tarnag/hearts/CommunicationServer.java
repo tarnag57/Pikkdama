@@ -84,17 +84,33 @@ public class CommunicationServer {
             }
             if (msg.length()==6){
                 if (msg.equals("CLUBS2")){
-                    int pos=0;
+                    int pos=searchplayer(ip);
                     for (int i=0;i<4;i++){
-                        if (gameActivity.serverGameThread.players[i].ip.equals(ip)) {
-                            pos=i;
-                        }
+                        sendMessage(i, "CALL." + Integer.toString(pos) + ".HEARTS");
                     }
-                    gameActivity.serverGameThread.addCard(pos,msg);
+                }
+            }
+
+            if (msg.length()==11){
+                if (msg.substring(0,7).equals("PLAYED.")){
+                    String card=msg.substring(7);
+                    gameActivity.serverGameThread.addCard(searchplayer(ip),card);
                 }
             }
         }
     }
+
+    int searchplayer(String ip){
+        for (int i=0;i<4;i++) {
+            if (gameActivity.serverGameThread.players[i].ip.length() == ip.length()) {
+                if (gameActivity.serverGameThread.players[i].ip.equals(ip)) {
+                    return i;
+                }
+            }
+        }
+        return 0;
+    }
+
 
     //MESSAGE SENDING FUNCTION
     public void sendMessage(String ip, String message) {
