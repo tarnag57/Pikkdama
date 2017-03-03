@@ -122,6 +122,7 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             drawLeftCards(leftNum, canvas);
             drawTopCards(topNum, canvas);
             drawRightCards(rightNum, canvas);
+            drawCenter();
 
             //drawing ok button
             Bitmap okButton;
@@ -240,6 +241,23 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             canvas.drawBitmap(scaled, x, y, null);
             y += desiredHalfRotatedHeight;
         }
+    }
+
+    protected void drawCenter() {
+
+        if (gameActivity.playedCards.size() == 0) return;
+        int centerLeft = (int) (screnWidth * 0.2f);
+        int centerTop = (int) (screenHeight * 0.35f);
+        int x = centerLeft;
+        int y = centerTop;
+        for (int i = 0; i < gameActivity.playedCards.size(); i++) {
+            int id = getResources().getIdentifier(gameActivity.playedCards.get(i).bmName, "drawable", context.getPackageName());
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), id);
+            Bitmap scaled = Bitmap.createScaledBitmap(bm, desired_card_width, desired_card_height, false);
+            canvas.drawBitmap(scaled, x, y, null);
+            x += (int) (screnWidth*0.17f);
+        }
+
     }
 
     //handles user input

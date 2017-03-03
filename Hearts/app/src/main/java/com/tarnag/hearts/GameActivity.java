@@ -44,9 +44,8 @@ public class GameActivity extends AppCompatActivity {
 
     ArrayList<Card> buffer = null;
 
-    int roundNumber = -1;
+    int roundNumber = 0;
 
-    public Card calledCard = null;
     ArrayList<Card> playedCards = null;
 
     @Override
@@ -270,10 +269,13 @@ public class GameActivity extends AppCompatActivity {
 
     public void endCall() {
         //TODO ending round
+        playedCards = null;
     }
 
-    //giving
+    //giving -> this is before startRound()
     public void giving() {
+
+        roundNumber++;
 
         //if giving is necessary
         if (roundNumber % 4 != 0) {
@@ -361,12 +363,12 @@ public class GameActivity extends AppCompatActivity {
 
         //if this is the first round
         if (gamePanel.cards.size() == 13) {
-            
+            if (card.point > 0) {
+                return false;
+            }
         }
 
         return true;
-
-        //TODO implement this!!!
     }
 
     public void youCall(boolean hearts) {
