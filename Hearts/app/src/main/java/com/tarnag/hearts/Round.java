@@ -31,7 +31,7 @@ public class Round {
     void addCard(String card){
         currentposition++;
         for (int i=0;i<4;i++){
-            communicationServer.sendMessage(i,"PLAYED."+Integer.toString(currentposition%4)+card);
+            communicationServer.sendMessage(i,"PLAYED."+Integer.toString(currentposition%4)+"."+card);
         }
         Card car= new Card(card);
         point+=car.point;
