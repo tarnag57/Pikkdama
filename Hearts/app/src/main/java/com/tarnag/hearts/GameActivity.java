@@ -305,6 +305,10 @@ public class GameActivity extends AppCompatActivity {
         //determine token
         gamePanel.token = player;
         gamePanel.isToken = true;
+
+        //remove played cards from the center
+        playedCards = new ArrayList<>();
+
         gamePanel.draw();
 
         //if you call
