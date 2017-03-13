@@ -96,6 +96,7 @@ public class Communication {
             if (gotMsg.contains("POSITION.")) {
                 if (gotMsg.substring(0,9).equals("POSITION.")){
                     gameActivity.gamePanel.ownPosition=Integer.parseInt(gotMsg.substring(9,10));
+                    Log.d("Ownposition",Integer.toString(gameActivity.gamePanel.ownPosition));
                 }
             }
 
