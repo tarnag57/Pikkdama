@@ -351,12 +351,12 @@ public class GameActivity extends AppCompatActivity {
         //if you don't have same colour
         boolean hasSame = false;
         for (int i = 0; i < gamePanel.cards.size(); i++) {
-            if (gamePanel.cards.get(i).colour != 1) {
+            if (gamePanel.cards.get(i).colour == playedCards.get(0).colour) {
                 hasSame = true;
             }
         }
 
-        //if you don't have same
+        //if you have same
         if (hasSame) {
             return false;
         }
