@@ -1,5 +1,7 @@
 package com.tarnag.hearts;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -49,6 +51,7 @@ public class Round {
         }
 
         if ((startposotion-currentposition)%4==3){
+            Log.d("Finishround","called");
             finishround();
         }
     }
