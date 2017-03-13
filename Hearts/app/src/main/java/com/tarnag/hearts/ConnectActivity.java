@@ -218,12 +218,16 @@ public class ConnectActivity extends AppCompatActivity {
             //intent.putExtra("isServer", isServer);
             intent.putExtra("playerName0", players.get(selectedPlayers[0]).playerName);
             intent.putExtra("playerIp0", players.get(selectedPlayers[0]).ip);
+            Log.d("Player 0", "Name: " + players.get(selectedPlayers[0]).playerName + " ip: " + players.get(selectedPlayers[0]).ip);
             intent.putExtra("playerName1", players.get(selectedPlayers[1]).playerName);
             intent.putExtra("playerIp1", players.get(selectedPlayers[1]).ip);
+            Log.d("Player 1", "Name: " + players.get(selectedPlayers[1]).playerName + " ip: " + players.get(selectedPlayers[1]).ip);
             intent.putExtra("playerName2", players.get(selectedPlayers[2]).playerName);
             intent.putExtra("playerIp2", players.get(selectedPlayers[2]).ip);
+            Log.d("Player 2", "Name: " + players.get(selectedPlayers[2]).playerName + " ip: " + players.get(selectedPlayers[2]).ip);
             intent.putExtra("playerName3", players.get(selectedPlayers[3]).playerName);
             intent.putExtra("playerIp3", players.get(selectedPlayers[3]).ip);
+            Log.d("Player 3", "Name: " + players.get(selectedPlayers[3]).playerName + " ip: " + players.get(selectedPlayers[3]).ip);
 
             //starts new activity, closes this one
             this.startActivity(intent);
