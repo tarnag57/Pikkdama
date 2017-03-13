@@ -115,8 +115,8 @@ public class CommunicationServer {
     //MESSAGE SENDING FUNCTION
     public void sendMessage(String ip, String message) {
         if (ip.equals(ownip)) {
+            Log.d("sendMessage", "Sending message to myself: " + message);
             if (connectActivity != null) {
-                Log.d("sendMessage", "Sending message to myself: " + message);
                 connectActivity.communication.parseReceivedMessage(message, ip);
                 Log.d("sendMessage", "Sent message to myself: " + message);
             } else if(gameActivity != null) {
@@ -131,6 +131,7 @@ public class CommunicationServer {
     }
 
     public void sendMessage(int i,String message){
+        Log.d("sendMessage", "Sending message to: " + gameActivity.serverGameThread.players[i].ip + " saying: " + message);
         sendMessage(gameActivity.serverGameThread.players[i].ip,message);
     }
 
