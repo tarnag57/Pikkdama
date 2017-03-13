@@ -95,7 +95,7 @@ public class Communication {
             }
             if (gotMsg.contains("POSITION.")) {
                 if (gotMsg.substring(0,9).equals("POSITION.")){
-                    gameActivity.gamePanel.ownPosition=gotMsg.charAt(9)-'0';
+                    gameActivity.gamePanel.ownPosition=Integer.parseInt(gotMsg.substring(9,10));
                 }
             }
 
