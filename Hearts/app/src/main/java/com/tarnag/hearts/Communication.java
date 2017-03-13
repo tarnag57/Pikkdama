@@ -151,7 +151,7 @@ public class Communication {
             if (gotMsg.length() > 7) {
                 if (gotMsg.substring(0,7).equals("PLAYED.")) {
                     int player = Integer.parseInt(gotMsg.substring(7,8));
-                    String cardType = gotMsg.substring(8);
+                    String cardType = gotMsg.substring(9);
                     Card played = new Card(cardType);
                     gameActivity.cardPlayed(player, played);
                 }
