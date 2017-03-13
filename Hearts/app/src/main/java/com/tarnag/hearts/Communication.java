@@ -137,6 +137,8 @@ public class Communication {
             if (gotMsg.length() > 4) {
                 if (gotMsg.substring(0,5).equals("CALL.")) {
                     int player = Integer.parseInt(gotMsg.substring(5,6));
+                    Log.d("Player to call:", Integer.toString(player));
+                    Log.d("Your number:", Integer.toString(gameActivity.gamePanel.ownPosition));
                     boolean hearts = false;
                     if (gotMsg.length() > 9) {
                         hearts = true;

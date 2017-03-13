@@ -150,6 +150,8 @@ public class ConnectActivity extends AppCompatActivity {
             Spinner spinner = playerAdapter.spinners.get(i);
             String selected = spinner.getSelectedItem().toString();
 
+            Log.d("Selected item", selected);
+
             //gets selected
             int num = 0;
             switch (selected) {
