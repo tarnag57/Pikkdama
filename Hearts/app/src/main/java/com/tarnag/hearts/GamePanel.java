@@ -73,11 +73,21 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
     Bitmap scaledBack = null;
     Bitmap scaledOK = null;
 
+    //SCALED IMAGES
+    Bitmap[][] scaledCards = new Bitmap[4][13];
+
     public GamePanel(Context context, GameActivity gameActivity) {
         super(context);
         this.gameActivity = gameActivity;
         this.context = context;
         background = BitmapFactory.decodeResource(getResources(), R.drawable.table_background);
+
+        //nulling scaledCards
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                scaledCards[i][j] = null;
+            }
+        }
 
     }
 
@@ -155,10 +165,26 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
         int y = cardsTop;
         int selectedUp = (int) (desired_card_height * 0.3f);
         for (int i = 0; i < size; i++) {
-            //get bitmap
-            int id = getResources().getIdentifier(cards.get(i).bmName, "drawable", context.getPackageName());
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), id);
-            Bitmap scaled = Bitmap.createScaledBitmap(bm, desired_card_width, desired_card_height, false);
+
+            int colour = cards.get(i).colour - 1;
+            int value = cards.get(i).value - 2;
+            Bitmap scaled;
+
+            //if it has been cached
+            if (scaledCards[colour][value] != null) {
+                scaled = scaledCards[colour][value];
+            }
+            //else read from resources
+            else {
+                //get bitmap
+                int id = getResources().getIdentifier(cards.get(i).bmName, "drawable", context.getPackageName());
+                Bitmap bm = BitmapFactory.decodeResource(getResources(), id);
+                scaled = Bitmap.createScaledBitmap(bm, desired_card_width, desired_card_height, false);
+
+                //put it into cache
+                scaledCards[colour][value] = scaled;
+            }
+
             if (cards.get(i).selected) {
                 y -= selectedUp;
             }
