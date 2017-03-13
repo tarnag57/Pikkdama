@@ -93,8 +93,8 @@ public class Communication {
                     return;
                 }
             }
-            if (gotMsg.contains("POSITION.")) {
-                if (gotMsg.substring(0,9).equals("POSITION.")){
+            if (gotMsg.contains("Position.")) {
+                if (gotMsg.substring(0,9).equals("Position.")){
                     gameActivity.gamePanel.ownPosition=Integer.parseInt(gotMsg.substring(9,10));
                     Log.d("Ownposition",Integer.toString(gameActivity.gamePanel.ownPosition));
                 }
