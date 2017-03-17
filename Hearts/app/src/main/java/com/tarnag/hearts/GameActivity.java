@@ -244,6 +244,9 @@ public class GameActivity extends AppCompatActivity {
         //add played cards
         playedCards.add(card);
 
+        //remove one card
+        gamePanel.numOfCards[player]--;
+
         //move token
         gamePanel.isToken = true;
         gamePanel.token = (player + 1) % 4;
@@ -292,6 +295,11 @@ public class GameActivity extends AppCompatActivity {
     public void startRound() {
         isInGame = true;
 
+        //creates 13 cards
+        for (int i = 0; i < 4; i++) {
+            gamePanel.numOfCards[i] = 13;
+        }
+
         //checks for clubs2
         for (int i = 0; i < gamePanel.cards.size(); i++) {
             if (gamePanel.cards.get(i).type.equals("4_02")) {
@@ -308,6 +316,12 @@ public class GameActivity extends AppCompatActivity {
 
         //remove played cards from the center
         playedCards = new ArrayList<>();
+
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         gamePanel.draw();
 
