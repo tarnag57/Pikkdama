@@ -107,7 +107,7 @@ public class ServerGameThread extends Thread {
 
     }
 
-    private void beforeDealing(){
+    public void beforeDealing(){
         callNumber=0;
         //sending scores
         for (int i = 0; i < 4; i++){
@@ -133,7 +133,7 @@ public class ServerGameThread extends Thread {
     }
 
 
-    private void dealing(){
+    public void dealing(){
 
         //creating deck
         Card[] deck = new Card[52];

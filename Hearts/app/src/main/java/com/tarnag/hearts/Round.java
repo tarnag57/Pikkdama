@@ -1,5 +1,6 @@
 package com.tarnag.hearts;
 
+import android.support.annotation.IntegerRes;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -54,11 +55,11 @@ public class Round {
                 }
         }
 
-        Log.d("Place of highest card",Integer.toString(placeofhighestcardvalue));
+        //Log.d("Place of highest card",Integer.toString(placeofhighestcardvalue));
 
-        Log.d("currentposition",Integer.toString(currentposition));
+        //Log.d("currentposition",Integer.toString(currentposition));
         //gdsa
-        Log.d("startpositition", Integer.toString(startposotion));
+        //Log.d("startpositition", Integer.toString(startposotion));
 
         Log.d("Position in a round",Integer.toString((startposotion-currentposition)%4));
         if ((startposotion-currentposition)%4==1){
@@ -71,7 +72,7 @@ public class Round {
         //points
         serverGameThread.callNumber++;
         serverGameThread.pointsInRound[placeofhighestcardvalue%4]+=point;
-
+        Log.d("callNumber", Integer.toString(serverGameThread.callNumber));
         if (serverGameThread.callNumber==13){
             //checking if someone got all points
             boolean isAll=false;
@@ -84,16 +85,39 @@ public class Round {
                 if (!isAll) pff=serverGameThread.pointsInRound[i]; else pff=26-serverGameThread.pointsInRound[i];
                 serverGameThread.points[i]+=pff;
                 serverGameThread.pointsInRound[i]=0;
+                Log.d("Point of "+ Integer.toString(i),Integer.toString(pff));
+                Log.d("ALl point of "+ Integer.toString(i),Integer.toString(serverGameThread.points[i]));
             }
             serverGameThread.callNumber=0;
-        }
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                //e.printStackTrace();
+            }
 
-        //calling next round
-        for (int i=0;i<4;i++) {
-        if (gameActivity.serverGameThread.canCallHearts)
-            communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue%4) + ".HEARTS");
-            else communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue%4));
+            serverGameThread.beforeDealing();
+
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                //e.printStackTrace();
+            }
+
+
+            serverGameThread.dealing();
+            serverGameThread.round = null;
+
         }
-        serverGameThread.round=null;
+        else {
+
+            //calling next round
+            for (int i = 0; i < 4; i++) {
+                if (gameActivity.serverGameThread.canCallHearts)
+                    communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue % 4) + ".HEARTS");
+                else
+                    communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue % 4));
+            }
+            serverGameThread.round = null;
+        }
     }
 }
