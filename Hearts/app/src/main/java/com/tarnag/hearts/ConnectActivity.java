@@ -29,6 +29,7 @@ public class ConnectActivity extends AppCompatActivity {
     TextView textViewStatus;
     ListView listView;
     Button startButton;
+    EditText editCode;
 
     //chosen name of the user
     String ownName = "";
@@ -58,6 +59,7 @@ public class ConnectActivity extends AppCompatActivity {
         textViewStatus = (TextView) findViewById(R.id.status);
         editName = (EditText) findViewById(R.id.editText);
         communication = new Communication(this);
+        editCode=(EditText) findViewById(R.id.editCode);
     }
 
     public void searchServerClicked(View view) {
@@ -75,15 +77,20 @@ public class ConnectActivity extends AppCompatActivity {
             return;
         }
 
-        //searching for server
+        String code=editCode.getText().toString();
+        if (!code.equals("")){
+            ip = communication.getIPAddress();
+            subIp = communication.getSubIP(ip);
+            communication.sendMessage(ip+"."+code,"NAME." + ownName);
+        }
+        else {
+            //searching for server
+            ip = communication.getIPAddress();
+            subIp = communication.getSubIP(ip);
+            SearchingTread searchingTread = new SearchingTread();
+            searchingTread.start();
 
-
-        ip = communication.getIPAddress();
-        subIp = communication.getSubIP(ip);
-        SearchingTread searchingTread= new SearchingTread();
-        searchingTread.start();
-
-
+        }
     }
 
     public void hostServerClicked(View view) {
@@ -99,6 +106,7 @@ public class ConnectActivity extends AppCompatActivity {
 
         isServer = true;
         writeToUI(getResources().getString(R.string.hosting_server));
+        writeToUI(getResources().getString(R.string.yourcode)+communication.getlastip(ip));
 
         communicationServer = new CommunicationServer(this);
 

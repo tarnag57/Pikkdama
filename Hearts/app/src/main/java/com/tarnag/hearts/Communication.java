@@ -374,4 +374,11 @@ public class Communication {
         return subIP;
 
     }
+
+    public String getlastip(String ip){
+        ip=ip.substring(ip.indexOf('.')+1);
+        ip=ip.substring(ip.indexOf('.')+1);
+        ip=ip.substring(ip.indexOf('.')+1);
+        return ip;
+    }
 }

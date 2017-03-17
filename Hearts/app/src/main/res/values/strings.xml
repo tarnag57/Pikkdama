@@ -6,9 +6,11 @@
     <string name="waiting_for_server">Waiting for server</string>
     <string name="must_enter_name">You have to enter a name</string>
     <string name="start_button">Start Game</string>
-    <string name="hosting_server">Hosting Server</string>
+    <string name="hosting_server">Hosting Server\n</string>
     <string name="search_for_server">Searching for Server...</string>
     <string name="failed">Failed\nPlease search again</string>
+    <string name="yourcode">Your code is: </string>
+    <string name="code">Code</string>
 
     <string-array name="Player">
         <item>None</item>
