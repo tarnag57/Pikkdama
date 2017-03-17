@@ -6,7 +6,7 @@
     <TextView
         android:text="TextView"
         android:id="@+id/textView"
-        android:layout_width="300dp"
+        android:layout_width="174dp"
         android:textSize="24sp"
         android:textAlignment="viewStart"
         android:layout_height="50dp" />
