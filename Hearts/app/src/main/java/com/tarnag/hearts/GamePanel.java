@@ -89,6 +89,11 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             }
         }
 
+        //creating players
+        for (int i = 0; i < 4; i++) {
+            players[i] = new Player(null, null);
+        }
+
     }
 
     public void draw() {

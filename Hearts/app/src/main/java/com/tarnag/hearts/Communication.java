@@ -81,7 +81,6 @@ public class Communication {
                     String msg=gotMsg.substring(11);
                     int position=msg.charAt(0)-'0';
                     String name=msg.substring(2);
-                    gameActivity.gamePanel.players[position]=new Player(null,name);
                     gameActivity.gamePanel.players[position].position=position;
                     return;
                 }
