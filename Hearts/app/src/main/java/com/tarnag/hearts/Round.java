@@ -41,16 +41,16 @@ public class Round {
         }
         Card car= new Card(card);
         point+=car.point;
-        if (startposotion-currentposition==1){
+        if ((startposotion-currentposition)%4==0){
             colourofRound=car.colour;
             highestcardvalue=car.value;
-            placeofhighestcardvalue=currentposition%4;
+            placeofhighestcardvalue=currentposition;
         }
         else {
             if (car.colour==colourofRound)
                 if (car.value>highestcardvalue){
                     highestcardvalue=car.value;
-                    placeofhighestcardvalue=currentposition%4;
+                    placeofhighestcardvalue=currentposition;
                 }
         }
 
@@ -70,7 +70,7 @@ public class Round {
     void finishround(){
         //points
         serverGameThread.callNumber++;
-        serverGameThread.pointsInRound[placeofhighestcardvalue]+=point;
+        serverGameThread.pointsInRound[placeofhighestcardvalue%4]+=point;
 
         if (serverGameThread.callNumber==13){
             //checking if someone got all points
@@ -91,8 +91,8 @@ public class Round {
         //calling next round
         for (int i=0;i<4;i++) {
         if (gameActivity.serverGameThread.canCallHearts)
-            communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue) + ".HEARTS");
-            else communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue));
+            communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue%4) + ".HEARTS");
+            else communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue%4));
         }
         serverGameThread.round=null;
     }
