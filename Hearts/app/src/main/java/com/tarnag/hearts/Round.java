@@ -23,13 +23,13 @@ public class Round {
 
     Round(int pos, String card, GameActivity gameActivity, CommunicationServer communicationServer,ServerGameThread serverGameThread){
         Log.d("pos",Integer.toString(pos));
-        startposotion=pos;
+        startposotion=pos+100;
         Log.d("startposition",Integer.toString(startposotion));
         this.gameActivity=gameActivity;
         this.communicationServer=communicationServer;
         this.serverGameThread=serverGameThread;
         //addCard(card);
-        currentposition=pos-1;
+        currentposition=pos+15;
     }
 
     void addCard(String card){
@@ -54,11 +54,14 @@ public class Round {
                 }
         }
 
+        Log.d("Place of highest card",Integer.toString(placeofhighestcardvalue));
+
         Log.d("currentposition",Integer.toString(currentposition));
+        //gdsa
         Log.d("startpositition", Integer.toString(startposotion));
 
-        Log.d("Position in a round",Integer.toString((startposotion-currentposition+16)%4));
-        if ((startposotion-currentposition)%4==3){
+        Log.d("Position in a round",Integer.toString((startposotion-currentposition)%4));
+        if ((startposotion-currentposition)%4==1){
             Log.d("Finishround","called");
             finishround();
         }
