@@ -142,6 +142,11 @@ public class ServerGameThread extends Thread {
             for (int j = 2; j < 15; j++) {
                 deck[index] = new Card(i, j);
                 index++;
+                try {
+                    sleep(10);
+                } catch (InterruptedException e) {
+                   // e.printStackTrace();
+                }
             }
         }
 

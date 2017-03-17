@@ -87,6 +87,7 @@ public class Round {
                 serverGameThread.pointsInRound[i]=0;
                 Log.d("Point of "+ Integer.toString(i),Integer.toString(pff));
                 Log.d("ALl point of "+ Integer.toString(i),Integer.toString(serverGameThread.points[i]));
+                serverGameThread.players[i].score=serverGameThread.points[i];
             }
             serverGameThread.callNumber=0;
             try {
