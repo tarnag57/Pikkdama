@@ -50,6 +50,7 @@ public class Round {
                 }
         }
 
+        Log.d("Position in a round",Integer.toString((startposotion-currentposition)%4));
         if ((startposotion-currentposition)%4==3){
             Log.d("Finishround","called");
             finishround();
