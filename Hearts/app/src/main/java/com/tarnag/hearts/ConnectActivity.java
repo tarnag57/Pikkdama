@@ -280,6 +280,7 @@ public class ConnectActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     //e.printStackTrace();
                 }
+                if (isConnected) break;
             }
 
             try {
