@@ -22,7 +22,9 @@ public class Round {
 
 
     Round(int pos, String card, GameActivity gameActivity, CommunicationServer communicationServer,ServerGameThread serverGameThread){
+        Log.d("pos",Integer.toString(pos));
         startposotion=pos;
+        Log.d("startposition",Integer.toString(startposotion));
         this.gameActivity=gameActivity;
         this.communicationServer=communicationServer;
         this.serverGameThread=serverGameThread;
@@ -32,6 +34,8 @@ public class Round {
 
     void addCard(String card){
         currentposition++;
+        Log.d("currentposition",Integer.toString(currentposition));
+        Log.d("startpositition", "a"+Integer.toString(startposotion));
         for (int i=0;i<4;i++){
             communicationServer.sendMessage(i,"PLAYED."+Integer.toString(currentposition%4)+"."+card);
         }
@@ -50,7 +54,10 @@ public class Round {
                 }
         }
 
-        Log.d("Position in a round",Integer.toString((startposotion-currentposition)%4));
+        Log.d("currentposition",Integer.toString(currentposition));
+        Log.d("startpositition", Integer.toString(startposotion));
+
+        Log.d("Position in a round",Integer.toString((startposotion-currentposition+16)%4));
         if ((startposotion-currentposition)%4==3){
             Log.d("Finishround","called");
             finishround();
@@ -84,5 +91,6 @@ public class Round {
             communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue) + ".HEARTS");
             else communicationServer.sendMessage(i, "CALL." + Integer.toString(placeofhighestcardvalue));
         }
+        serverGameThread.round=null;
     }
 }

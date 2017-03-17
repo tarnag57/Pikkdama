@@ -1,5 +1,7 @@
 package com.tarnag.hearts;
 
+import android.util.Log;
+
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -170,7 +172,8 @@ public class ServerGameThread extends Thread {
     }
 
     public void addCard(int pos, String card){
-        if (callNumber==0) round=new Round(pos,card,gameActivity,communicationServer,this);
+        //Log.d("callNumber",Integer.toString(callNumber));
+        if (round==null) round=new Round(pos,card,gameActivity,communicationServer,this);
         round.addCard(card);
     }
 

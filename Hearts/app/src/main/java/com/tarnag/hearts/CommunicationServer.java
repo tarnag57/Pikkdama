@@ -94,6 +94,7 @@ public class CommunicationServer {
             if (msg.length()==11){
                 if (msg.substring(0,7).equals("PLAYED.")){
                     String card=msg.substring(7);
+                    Log.d("Addcard","called");
                     gameActivity.serverGameThread.addCard(searchplayer(ip),card);
                 }
             }
