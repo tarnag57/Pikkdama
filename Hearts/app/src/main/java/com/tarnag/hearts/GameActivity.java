@@ -317,6 +317,12 @@ public class GameActivity extends AppCompatActivity {
         //remove played cards from the center
         playedCards = new ArrayList<>();
 
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         gamePanel.draw();
 
         //if you call
