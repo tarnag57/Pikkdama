@@ -8,4 +8,8 @@
     <string name="waiting_for_server">Várakozás a szerverre</string>
     <string name="start_button">Játék elindítása</string>
     <string name="hosting_server">Szerver létrehozva</string>
+    <string name="code">Kód</string>
+    <string name="failed">Sikertelen\\n Kérlek keress újra</string>
+    <string name="search_for_server">Szerver keresése</string>
+    <string name="yourcode">"A kódod: "</string>
 </resources>
