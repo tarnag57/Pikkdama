@@ -72,6 +72,7 @@ public class Round {
         //points
         serverGameThread.callNumber++;
         serverGameThread.pointsInRound[placeofhighestcardvalue%4]+=point;
+        if (point!=0 && point!=13)  serverGameThread.canCallHearts=true;
         Log.d("callNumber", Integer.toString(serverGameThread.callNumber));
         if (serverGameThread.callNumber==13){
             //checking if someone got all points
@@ -90,6 +91,7 @@ public class Round {
                 serverGameThread.players[i].score=serverGameThread.points[i];
             }
             serverGameThread.callNumber=0;
+            serverGameThread.canCallHearts=false;
             try {
                 Thread.sleep(150);
             } catch (InterruptedException e) {
