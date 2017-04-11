@@ -377,7 +377,7 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
         y = (int) (y + screenHeight * 0.035f);
         x = (int) (screnWidth * 0.96);
         if (isToken) {
-            if (token == (ownPosition + 2) % 4) {
+            if (token == (ownPosition + 3) % 4) {
                 Bitmap scaled;
                 if (scaledToken == null) {
                     Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.token);

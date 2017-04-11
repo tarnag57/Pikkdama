@@ -310,6 +310,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void call(int player, boolean hearts) {
 
+        Log.d("Player to call", Integer.toString(player) + " hearts: " + Boolean.toString(hearts));
+
         //determine token
         gamePanel.token = player;
         gamePanel.isToken = true;
