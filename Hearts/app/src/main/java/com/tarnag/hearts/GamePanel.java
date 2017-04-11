@@ -80,12 +80,15 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
     Bitmap scaledToken = null;
 
     Paint namePaint = new Paint();
+    Paint centrePaint = new Paint();
 
     int desiredTokenWidth;
     int desiredTokenHeight;
 
     //name size
     private static final float GESTURE_THRESHOLD_DP = 14.0f;
+    //your turn size
+    private static final float GESTURE_THRESHOLD_DP_NEW = 26.0f;
 
     public GamePanel(Context context, GameActivity gameActivity) {
         super(context);
@@ -154,6 +157,14 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             int mGestureThreshold = (int) (GESTURE_THRESHOLD_DP * scale + 0.5f);
             namePaint.setColor(Color.RED);
             namePaint.setTextSize(mGestureThreshold);
+
+            //configuring centrePaint
+            // Get the screen's density scale
+            final float newScale = getResources().getDisplayMetrics().density;
+            // Convert the dps to pixels, based on density scale
+            int newGestureThreshold = (int) (GESTURE_THRESHOLD_DP_NEW * newScale + 0.5f);
+            centrePaint.setColor(Color.RED);
+            centrePaint.setTextSize(newGestureThreshold);
 
             drawCards(canvas);
             drawLeftCards(leftNum, canvas);
@@ -264,6 +275,26 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             canvas.drawBitmap(scaled, x, y, null);
             y += desiredHalfRotatedHeight;
         }
+
+        //name
+        y += (int) (desiredRotatedHeight * OTHER_CARDS_SCALE * 1.4);
+        x = (int) (screnWidth * 0.01);
+        canvas.drawText(players[(ownPosition + 1) % 4].playerName + " - " + Integer.toString(players[(ownPosition + 1) % 4].score), x, y, namePaint);
+
+        //drawing token
+        y = (int) (y + screenHeight * 0.035f);
+        if (isToken) {
+            if (token == (ownPosition + 1) % 4) {
+                Bitmap scaled;
+                if (scaledToken == null) {
+                    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.token);
+                    scaled = Bitmap.createScaledBitmap(bm, desiredTokenWidth, desiredTokenHeight, false);
+                } else {
+                    scaled = scaledToken;
+                }
+                canvas.drawBitmap(scaled, x, y, null);
+            }
+        }
     }
 
     protected void drawTopCards(int num, Canvas canvas) {
@@ -289,6 +320,28 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             canvas.drawBitmap(scaled, x, y, null);
             x += desiredHalfSmallWidth;
         }
+
+        //name
+        y = (int) (screenHeight * 0.04);
+        x = (int) (x + desiredSmallWidth);
+        canvas.drawText(players[(ownPosition + 2) % 4].playerName + " - " + Integer.toString(players[(ownPosition + 2) % 4].score), x, y, namePaint);
+
+        //drawing token
+        y = (int) (y + screenHeight * 0.035);
+        x = (int) (x + screnWidth * 0.01);
+        if (isToken) {
+            if (token == (ownPosition + 2) % 4) {
+                Bitmap scaled;
+                if (scaledToken == null) {
+                    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.token);
+                    scaled = Bitmap.createScaledBitmap(bm, desiredTokenWidth, desiredTokenHeight, false);
+                } else {
+                    scaled = scaledToken;
+                }
+                canvas.drawBitmap(scaled, x, y, null);
+            }
+        }
+
     }
 
     protected void drawRightCards(int num, Canvas canvas) {
@@ -314,6 +367,28 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             canvas.drawBitmap(scaled, x, y, null);
             y += desiredHalfRotatedHeight;
         }
+
+        //name
+        y += (int) (desiredRotatedHeight * OTHER_CARDS_SCALE * 1.4);
+        x = (int) (screnWidth * 0.85);
+        canvas.drawText(players[(ownPosition + 3) % 4].playerName + " - " + Integer.toString(players[(ownPosition + 3) % 4].score), x, y, namePaint);
+
+        //drawing token
+        y = (int) (y + screenHeight * 0.035f);
+        x = (int) (screnWidth * 0.96);
+        if (isToken) {
+            if (token == (ownPosition + 2) % 4) {
+                Bitmap scaled;
+                if (scaledToken == null) {
+                    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.token);
+                    scaled = Bitmap.createScaledBitmap(bm, desiredTokenWidth, desiredTokenHeight, false);
+                } else {
+                    scaled = scaledToken;
+                }
+                canvas.drawBitmap(scaled, x, y, null);
+            }
+        }
+
     }
 
     protected void drawCenter() {
@@ -332,6 +407,13 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             x += (int) (screnWidth*0.17f);
         }
 
+        if (isToken) {
+            if (token == ownPosition) {
+                x = (int) (screnWidth * 0.4);
+                y = (int) (screenHeight * 0.25);
+                canvas.drawText("Your Turn", x, y, centrePaint);
+            }
+        }
     }
 
     //handles user input
