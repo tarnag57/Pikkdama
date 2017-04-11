@@ -80,12 +80,15 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
     Bitmap scaledToken = null;
 
     Paint namePaint = new Paint();
+    Paint centrePaint = new Paint();
 
     int desiredTokenWidth;
     int desiredTokenHeight;
 
     //name size
     private static final float GESTURE_THRESHOLD_DP = 14.0f;
+    //your turn size
+    private static final float GESTURE_THRESHOLD_DP_NEW = 26.0f;
 
     public GamePanel(Context context, GameActivity gameActivity) {
         super(context);
@@ -154,6 +157,14 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             int mGestureThreshold = (int) (GESTURE_THRESHOLD_DP * scale + 0.5f);
             namePaint.setColor(Color.RED);
             namePaint.setTextSize(mGestureThreshold);
+
+            //configuring centrePaint
+            // Get the screen's density scale
+            final float newScale = getResources().getDisplayMetrics().density;
+            // Convert the dps to pixels, based on density scale
+            int newGestureThreshold = (int) (GESTURE_THRESHOLD_DP_NEW * newScale + 0.5f);
+            centrePaint.setColor(Color.RED);
+            centrePaint.setTextSize(newGestureThreshold);
 
             drawCards(canvas);
             drawLeftCards(leftNum, canvas);
@@ -396,6 +407,13 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             x += (int) (screnWidth*0.17f);
         }
 
+        if (isToken) {
+            if (token == ownPosition) {
+                x = (int) (screnWidth * 0.4);
+                y = (int) (screenHeight * 0.25);
+                canvas.drawText("Your Turn", x, y, centrePaint);
+            }
+        }
     }
 
     //handles user input
