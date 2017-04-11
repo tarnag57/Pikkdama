@@ -82,6 +82,7 @@ public class Communication {
                     int position=msg.charAt(0)-'0';
                     String name=msg.substring(2);
                     gameActivity.gamePanel.players[position].position=position;
+                    gameActivity.gamePanel.players[position].playerName=name;
                     return;
                 }
 
