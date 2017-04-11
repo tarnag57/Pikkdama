@@ -278,6 +278,7 @@ public class GameActivity extends AppCompatActivity {
 
         //remove one card
         gamePanel.numOfCards[player]--;
+        Log.d("Card removed from", Integer.toString(player) + " with name " + gamePanel.players[player].playerName);
 
         //move token
         gamePanel.isToken = true;

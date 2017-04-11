@@ -47,17 +47,6 @@ public class Communication {
         socketListeningThread.start();
     }
 
-    Communication (GameActivity activity) {
-        this.gameActivity=activity;
-        ownip = getIPAddress();
-        Log.d("ClientCom", "CLIENTCOM CREATED from gameActivity");
-
-        //creates listening thread and starts i
-        SocketListeningThread socketListeningThread = new SocketListeningThread();
-        socketListeningThread.start();
-    }
-
-
     //PARESES THE RECEIVE MESSAGES AND TAKES ACTION
     public void parseReceivedMessage (String gotMsg, String clientIP) {
         if (connectActivity!=null){
@@ -159,6 +148,17 @@ public class Communication {
         }
 
 
+    }
+
+
+    Communication (GameActivity activity) {
+        this.gameActivity=activity;
+        ownip = getIPAddress();
+        Log.d("ClientCom", "CLIENTCOM CREATED from gameActivity");
+
+        //creates listening thread and starts i
+        SocketListeningThread socketListeningThread = new SocketListeningThread();
+        socketListeningThread.start();
     }
 
     //MESSAGE SENDING FUNCTION
