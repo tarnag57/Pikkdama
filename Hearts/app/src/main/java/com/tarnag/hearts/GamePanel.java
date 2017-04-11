@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -75,6 +77,15 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
 
     //SCALED IMAGES
     Bitmap[][] scaledCards = new Bitmap[4][13];
+    Bitmap scaledToken = null;
+
+    Paint namePaint = new Paint();
+
+    int desiredTokenWidth;
+    int desiredTokenHeight;
+
+    //name size
+    private static final float GESTURE_THRESHOLD_DP = 14.0f;
 
     public GamePanel(Context context, GameActivity gameActivity) {
         super(context);
@@ -128,10 +139,21 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             desired_card_width = screnWidth / 9;
             desired_half_card_width = (int) (desired_card_width * HALF_CARD_SCALE);
 
+            desiredTokenWidth = (int) (screnWidth * 0.03);
+            desiredTokenHeight = (int) (screnWidth * 0.03);
+
             canDraw = false;
             canvas = surfaceHolder.lockCanvas();
             Bitmap scaled = Bitmap.createScaledBitmap(background, getWidth(), getHeight(), false);
             canvas.drawBitmap(scaled, 0, 0, null);
+
+            //configuring namePaints
+            // Get the screen's density scale
+            final float scale = getResources().getDisplayMetrics().density;
+            // Convert the dps to pixels, based on density scale
+            int mGestureThreshold = (int) (GESTURE_THRESHOLD_DP * scale + 0.5f);
+            namePaint.setColor(Color.RED);
+            namePaint.setTextSize(mGestureThreshold);
 
             drawCards(canvas);
             drawLeftCards(leftNum, canvas);
@@ -196,6 +218,26 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
             canvas.drawBitmap(scaled, x, y, null);
             y = cardsTop;
             x += desired_half_card_width;
+        }
+
+        x = (int) (screnWidth * 0.02);
+        y = (int) (screenHeight * 0.90);
+        canvas.drawText(players[ownPosition].playerName + " - " + Integer.toString(players[ownPosition].score), x, y, namePaint);
+
+        //drawing token
+        x = (int) (cardsLeft - screnWidth * 0.05);
+        y = (int) (y + screenHeight * 0.035f);
+        if (isToken) {
+            if (token == ownPosition) {
+                Bitmap scaled;
+                if (scaledToken == null) {
+                    Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.token);
+                    scaled = Bitmap.createScaledBitmap(bm, desiredTokenWidth, desiredTokenHeight, false);
+                } else {
+                    scaled = scaledToken;
+                }
+                canvas.drawBitmap(scaled, x, y, null);
+            }
         }
     }
 
