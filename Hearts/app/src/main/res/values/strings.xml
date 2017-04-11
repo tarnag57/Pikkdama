@@ -11,6 +11,10 @@
     <string name="failed">Failed\nPlease search again</string>
     <string name="yourcode">Your code is: </string>
     <string name="code">Code</string>
+    <string name="cantplay">You can\'t play this card</string>
+    <string name="cantcall">You can\'t call this card</string>
+    <string name="onlyone">You must select exactly one card</string>
+    <string name="onlythree">You have to select exactly 3 cards</string>
 
     <string-array name="Player">
         <item>None</item>

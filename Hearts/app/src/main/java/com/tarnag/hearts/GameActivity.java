@@ -1,5 +1,6 @@
 package com.tarnag.hearts;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -107,6 +109,12 @@ public class GameActivity extends AppCompatActivity {
         //which mode
         if (isGiving) {
             if (cards.size() != 3) {
+                Context context = getApplicationContext();
+                CharSequence text = getResources().getString(R.string.onlythree) ;
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 return;
             }
 
@@ -149,9 +157,21 @@ public class GameActivity extends AppCompatActivity {
 
         if (isYouCall) {
             if (cards.size() != 1) {
+                Context context = getApplicationContext();
+                CharSequence text = getResources().getString(R.string.onlyone) ;
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 return;
             }
             if (!canCallThisCard(cards.get(0))) {
+                Context context = getApplicationContext();
+                CharSequence text = getResources().getString(R.string.cantcall) ;
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 return;
             }
 
@@ -173,9 +193,21 @@ public class GameActivity extends AppCompatActivity {
 
         if (isYouPlay) {
             if (cards.size() != 1) {
+                Context context = getApplicationContext();
+                CharSequence text = getResources().getString(R.string.onlyone) ;
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 return;
             }
             if (!canPlayThisCard(cards.get(0))) {
+                Context context = getApplicationContext();
+                CharSequence text = getResources().getString(R.string.cantplay) ;
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 return;
             }
 
@@ -357,6 +389,7 @@ public class GameActivity extends AppCompatActivity {
                 onlyHearts = false;
             }
         }
+
         return onlyHearts;
 
     }
