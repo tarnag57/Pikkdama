@@ -67,7 +67,7 @@ public class ConnectActivity extends AppCompatActivity {
         if (isServer) return;
         if (isPressed) return;
 
-        isPressed=true;
+
         writeToUI(getResources().getString(R.string.search_for_server));
         ownName = editName.getText().toString();
 
@@ -81,9 +81,10 @@ public class ConnectActivity extends AppCompatActivity {
         if (!code.equals("")){
             ip = communication.getIPAddress();
             subIp = communication.getSubIP(ip);
-            communication.sendMessage(ip+"."+code,"NAME." + ownName);
+            communication.sendMessage(subIp+"."+code,"NAME." + ownName);
         }
         else {
+            isPressed=true;
             //searching for server
             ip = communication.getIPAddress();
             subIp = communication.getSubIP(ip);
@@ -106,7 +107,7 @@ public class ConnectActivity extends AppCompatActivity {
 
         isServer = true;
         writeToUI(getResources().getString(R.string.hosting_server));
-        writeToUI(getResources().getString(R.string.yourcode)+communication.getlastip(ip));
+        writeToUI(getResources().getString(R.string.yourcode)+communication.getlastip(serverIP));
 
         communicationServer = new CommunicationServer(this);
 

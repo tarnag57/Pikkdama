@@ -376,9 +376,13 @@ public class Communication {
     }
 
     public String getlastip(String ip){
+        Log.d("getlastip","called "+ip);
         ip=ip.substring(ip.indexOf('.')+1);
+        Log.d("getlastip1: ",ip);
         ip=ip.substring(ip.indexOf('.')+1);
+        Log.d("getlastip2: ",ip);
         ip=ip.substring(ip.indexOf('.')+1);
+        Log.d("getlastip3: ",ip);
         return ip;
     }
 }
