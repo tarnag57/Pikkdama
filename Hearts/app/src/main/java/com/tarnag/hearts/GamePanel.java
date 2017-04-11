@@ -114,10 +114,10 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
         canDraw = true;
         for (int i = 0; i < 4; i++) {
             int cur = (ownPosition + i) % 4;
-            switch (cur) {
-                case 1: leftNum = numOfCards[i]; break;
-                case 2: topNum = numOfCards[i]; break;
-                case 3: rightNum = numOfCards[i]; break;
+            switch (i) {
+                case 1: leftNum = numOfCards[cur]; break;
+                case 2: topNum = numOfCards[cur]; break;
+                case 3: rightNum = numOfCards[cur]; break;
             }
         }
         Thread thread = new Thread(this);
