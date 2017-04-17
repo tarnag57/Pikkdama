@@ -78,8 +78,16 @@ public class ServerGameThread extends Thread {
         }
 
         //determine dest player
-        int destIndex = (index + roundNumber) % 4;
-        send(destIndex, msg);
+        int destIndex=index ;
+        switch(roundNumber%4){
+            case 1: destIndex++;
+                break;
+            case 2: destIndex--;
+                break;
+            case 3: destIndex+=2;
+                break;
+        }
+        send(destIndex%4, msg);
 
         //counting given cards
         givenCards++;

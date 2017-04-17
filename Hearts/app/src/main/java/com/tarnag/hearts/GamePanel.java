@@ -233,8 +233,9 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
 
         x = (int) (screnWidth * 0.02);
         y = (int) (screenHeight * 0.90);
-        canvas.drawText(players[ownPosition].playerName + " - " + Integer.toString(players[ownPosition].score), x, y, namePaint);
-
+        if (players[ownPosition].playerName!=null) {
+            canvas.drawText(players[ownPosition].playerName + " - " + Integer.toString(players[ownPosition].score), x, y, namePaint);
+        }
         //drawing token
         x = (int) (cardsLeft - screnWidth * 0.05);
         y = (int) (y + screenHeight * 0.035f);
@@ -280,6 +281,7 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
         //name
         y += (int) (desiredRotatedHeight * OTHER_CARDS_SCALE * 1.4);
         x = (int) (screnWidth * 0.01);
+        if (players[(ownPosition + 1) % 4].playerName!=null)
         canvas.drawText(players[(ownPosition + 1) % 4].playerName + " - " + Integer.toString(players[(ownPosition + 1) % 4].score), x, y, namePaint);
 
         //drawing token
@@ -326,6 +328,7 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
         //name
         y = (int) (screenHeight * 0.04);
         x = (int) (x + desiredSmallWidth);
+        if (players[(ownPosition+2)%4].playerName!=null)
         canvas.drawText(players[(ownPosition + 2) % 4].playerName + " - " + Integer.toString(players[(ownPosition + 2) % 4].score), x, y, namePaint);
 
         //drawing token
@@ -374,6 +377,7 @@ public class GamePanel extends SurfaceView implements Runnable{ //TODO detect se
         //name
         y += (int) (desiredRotatedHeight * OTHER_CARDS_SCALE * 1.4);
         x = (int) (screnWidth * 0.85);
+        if (players[(ownPosition+3)%4].playerName!=null)
         canvas.drawText(players[(ownPosition + 3) % 4].playerName + " - " + Integer.toString(players[(ownPosition + 3) % 4].score), x, y, namePaint);
 
         //drawing token

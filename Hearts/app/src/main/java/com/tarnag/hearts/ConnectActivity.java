@@ -53,6 +53,7 @@ public class ConnectActivity extends AppCompatActivity {
         //keep screen on
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+
         setContentView(R.layout.activity_connect);
         listView = (ListView) findViewById(R.id.listView);
         startButton = (Button) findViewById(R.id.startButton);
